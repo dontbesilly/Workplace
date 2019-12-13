@@ -1,0 +1,31 @@
+﻿<Window x:Class="Workplace1c.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Workplace1c"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        Title="Workplace 1c" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        materialDesign:TransitionAssist.DisableTransitions="True"
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}">
+    <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Bases}" CanUserSortColumns="True" 
+              CanUserAddRows="False" AutoGenerateColumns="False"
+              materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+              materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+        <DataGrid.Columns>
+            <materialDesign:DataGridTextColumn Binding="{Binding Title}"
+                                               Header="Имя"
+                                               EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+            <DataGridTemplateColumn Header="Delete">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Name="btnDelete" Content="Delete"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</Window>
