@@ -11,7 +11,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         materialDesign:TransitionAssist.DisableTransitions="True"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}">
-    <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Bases}" CanUserSortColumns="True" 
+    <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Bases}" 
+              SelectedItem="{Binding SelectedBase}"
+              CanUserSortColumns="True" 
               CanUserAddRows="False" AutoGenerateColumns="False"
               materialDesign:DataGridAssist.CellPadding="13 8 8 8"
               materialDesign:DataGridAssist.ColumnHeaderPadding="8">
@@ -19,13 +21,24 @@
             <materialDesign:DataGridTextColumn Binding="{Binding Title}"
                                                Header="Имя"
                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-            <DataGridTemplateColumn Header="Delete">
+            <DataGridTemplateColumn Header="-">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Button Name="btnDelete" Content="Delete"/>
+                        <Button Content="Delete" Command="{Binding DeleteCommand}"
+                                CommandParameter="{Binding SelectedBase}"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
         </DataGrid.Columns>
+        <DataGrid.ContextMenu>
+            <ContextMenu>
+                <MenuItem
+                    Header="Add base" 
+                    Command="{Binding AddCommand}"/>
+                <!--<MenuItem
+                    Header="Delete base" 
+                    Command="{Binding DeleteCommand}"/>-->
+            </ContextMenu>
+        </DataGrid.ContextMenu>
     </DataGrid>
 </Window>
