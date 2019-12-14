@@ -24,8 +24,12 @@
             <DataGridTemplateColumn Header="-">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Button Content="Delete" Command="{Binding DeleteCommand}"
-                                CommandParameter="{Binding SelectedBase}"/>
+                        <StackPanel>
+                            <Button Content="Delete" Command="{Binding Path=DataContext.DeleteBaseCommand,
+                            RelativeSource={RelativeSource FindAncestor,
+                            AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding SelectedBase}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
@@ -34,7 +38,7 @@
             <ContextMenu>
                 <MenuItem
                     Header="Add base" 
-                    Command="{Binding AddCommand}"/>
+                    Command="{Binding AddBaseCommand}"/>
                 <!--<MenuItem
                     Header="Delete base" 
                     Command="{Binding DeleteCommand}"/>-->

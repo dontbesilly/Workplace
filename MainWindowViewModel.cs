@@ -11,38 +11,37 @@ namespace Workplace1c
     {
         private WorkplaceContext db;
         private Base selectedBase;
+        private Random random = new Random();
 
         public ObservableCollection<Base> Bases { get; set; }
         public Base SelectedBase { get => selectedBase; set { selectedBase = value; OnPropertyChanged(nameof(SelectedBase)); } }
 
-        private RelayCommand addCommand;
-        public RelayCommand AddCommand
+        private RelayCommand addBaseCommand;
+        public RelayCommand AddBaseCommand
         {
             get
             {
-                return addCommand ??= new RelayCommand(obj =>
+                return addBaseCommand ??= new RelayCommand(obj =>
                 {
                     var base1c = new Base
                     {
-                        Title = "new base"
+                        Title = $"new base {random.Next()}"
                     };
                     db.Bases.Add(base1c);
-                    selectedBase = base1c;
-                    OnPropertyChanged(nameof(SelectedBase));
                     db.SaveChanges();
                 });
             }
         }
 
-        private RelayCommand deleteCommand;
-        public RelayCommand DeleteCommand
+        private RelayCommand deleteBaseCommand;
+        public RelayCommand DeleteBaseCommand
         {
             get
             {
-                return deleteCommand ??= new RelayCommand(obj =>
+                return deleteBaseCommand ??= new RelayCommand(obj =>
                 {
-                    if (!(obj is Base base1c)) return;
-                    db.Bases.Remove(base1c);
+                    if (selectedBase is null) return;
+                    db.Bases.Remove(selectedBase);
                     db.SaveChanges();
                 });
             }
