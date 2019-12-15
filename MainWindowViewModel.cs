@@ -11,7 +11,6 @@ namespace Workplace1c
     {
         private WorkplaceContext db;
         private Base selectedBase;
-        private Random random = new Random();
 
         public ObservableCollection<Base> Bases { get; set; }
         public Base SelectedBase { get => selectedBase; set { selectedBase = value; OnPropertyChanged(nameof(SelectedBase)); } }
@@ -23,11 +22,11 @@ namespace Workplace1c
             {
                 return addBaseCommand ??= new RelayCommand(obj =>
                 {
-                    var base1c = new Base
+                    var base1C = new Base
                     {
-                        Title = $"new base {random.Next()}"
+                        Title = "Новая база"
                     };
-                    db.Bases.Add(base1c);
+                    db.Bases.Add(base1C);
                     db.SaveChanges();
                 });
             }
@@ -47,6 +46,22 @@ namespace Workplace1c
             }
         }
 
+        private RelayCommand saveBasesCommand;
+        public RelayCommand SaveBasesCommand
+        {
+            get
+            {
+                return saveBasesCommand ??= new RelayCommand(obj =>
+                {
+                    foreach (Base b in Bases)
+                    {
+                        db.Bases.Update(selectedBase);
+                        db.SaveChanges();
+                    }
+                });
+            }
+        }
+
         public MainWindowViewModel()
         {
             db = new WorkplaceContext();
@@ -62,34 +77,6 @@ namespace Workplace1c
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class RelayCommand : ICommand
-    {
-        private readonly Action<object> execute;
-        private readonly Func<object, bool> canExecute;
-
-        public event EventHandler CanExecuteChanged
-        {
-            add => CommandManager.RequerySuggested += value;
-            remove => CommandManager.RequerySuggested -= value;
-        }
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return this.canExecute == null || this.canExecute(parameter);
-        }
-
-        public void Execute(object parameter)
-        {
-            this.execute(parameter);
         }
     }
 }

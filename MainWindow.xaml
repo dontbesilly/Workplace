@@ -7,42 +7,90 @@
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        Title="Workplace 1c" Height="450" Width="800"
+        Title="Рабочее место" Height="450" Width="800"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         materialDesign:TransitionAssist.DisableTransitions="True"
-        d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}">
-    <DataGrid Margin="0 8 0 0" ItemsSource="{Binding Bases}" 
-              SelectedItem="{Binding SelectedBase}"
-              CanUserSortColumns="True" 
-              CanUserAddRows="False" AutoGenerateColumns="False"
-              materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-              materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-        <DataGrid.Columns>
-            <materialDesign:DataGridTextColumn Binding="{Binding Title}"
-                                               Header="Имя"
-                                               EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-            <DataGridTemplateColumn Header="-">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Button Content="Delete" Command="{Binding Path=DataContext.DeleteBaseCommand,
-                            RelativeSource={RelativeSource FindAncestor,
-                            AncestorType={x:Type DataGrid}}}"
-                                    CommandParameter="{Binding SelectedBase}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid.Columns>
-        <DataGrid.ContextMenu>
-            <ContextMenu>
-                <MenuItem
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
+        FontFamily="Consolas">
+    <WrapPanel Margin="0 0 8 8">
+        <materialDesign:Card Width="430" Height="290">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <DataGrid Margin="0 8 0 0"  Grid.Row="0" IsSynchronizedWithCurrentItem="True"
+                  ItemsSource="{Binding Bases}" 
+                  SelectedItem="{Binding SelectedBase}"
+                  CanUserSortColumns="True" 
+                  CanUserAddRows="False" AutoGenerateColumns="False"
+                  materialDesign:DataGridAssist.CellPadding="13 7 7 7"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="7">
+                    <DataGrid.Columns>
+                        <materialDesign:DataGridTextColumn Width="125"
+                    Binding="{Binding Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    MaxLength="255"
+                    Header="Наименование"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </materialDesign:DataGridTextColumn>
+                        <DataGridCheckBoxColumn Width="115"
+                    Header="Серверная"
+                    Binding="{Binding Path=IsServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                        </DataGridCheckBoxColumn>
+                        <DataGridCheckBoxColumn Width="115"
+                    Header="Хранилище"
+                    Binding="{Binding Path=IsRepository, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                        </DataGridCheckBoxColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Button Height="30" Width="30"
+                                        Command="{Binding Path=DataContext.DeleteBaseCommand,
+                                    RelativeSource={RelativeSource FindAncestor,
+                                    AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding SelectedBase}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                        ToolTip="Удалить">
+                                            <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    <!--<DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
                     Header="Add base" 
                     Command="{Binding AddBaseCommand}"/>
-                <!--<MenuItem
-                    Header="Delete base" 
-                    Command="{Binding DeleteCommand}"/>-->
-            </ContextMenu>
-        </DataGrid.ContextMenu>
-    </DataGrid>
+                </ContextMenu>
+            </DataGrid.ContextMenu>-->
+                </DataGrid>
+                <Button Grid.Row="1" HorizontalAlignment="Left" Margin="10, 0"
+                        Command="{Binding AddBaseCommand}"
+                        Height="40" Width="40"
+                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                        ToolTip="Добавить базу">
+                    <materialDesign:PackIcon Kind="DatabaseAdd" Height="25" Width="25" />
+                </Button>
+                <Button Grid.Row="1" HorizontalAlignment="Left" Margin="60, 0"
+                        Command="{Binding SaveBasesCommand}"
+                        Height="40" Width="40"
+                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                        ToolTip="Сохранить всё">
+                    <materialDesign:PackIcon Kind="ContentSave" Height="25" Width="25" />
+                </Button>
+            </Grid>
+        </materialDesign:Card>
+    </WrapPanel>
 </Window>
