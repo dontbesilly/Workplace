@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Workplace1c
@@ -10,10 +11,19 @@ namespace Workplace1c
     class MainWindowViewModel : INotifyPropertyChanged
     {
         private WorkplaceContext db;
-        private Base selectedBase;
-
         public ObservableCollection<Base> Bases { get; set; }
-        public Base SelectedBase { get => selectedBase; set { selectedBase = value; OnPropertyChanged(nameof(SelectedBase)); } }
+
+        private Base selectedBase;
+        public Base SelectedBase
+        {
+            get => selectedBase;
+            set
+            {
+                selectedBase = value;
+                BaseParamsCardVisibility = Visibility.Visible;
+                OnPropertyChanged(nameof(SelectedBase));
+            }
+        }
 
         private RelayCommand addBaseCommand;
         public RelayCommand AddBaseCommand
@@ -53,12 +63,21 @@ namespace Workplace1c
             {
                 return saveBasesCommand ??= new RelayCommand(obj =>
                 {
-                    foreach (Base b in Bases)
-                    {
-                        db.Bases.Update(selectedBase);
-                        db.SaveChanges();
-                    }
+                    if (selectedBase is null) return;
+                    db.Bases.Update(selectedBase);
+                    db.SaveChanges();
                 });
+            }
+        }
+
+        private Visibility baseParamsCardVisibility = Visibility.Hidden;
+        public Visibility BaseParamsCardVisibility
+        {
+            get => baseParamsCardVisibility;
+            set
+            {
+                baseParamsCardVisibility = value;
+                OnPropertyChanged(nameof(BaseParamsCardVisibility));
             }
         }
 
