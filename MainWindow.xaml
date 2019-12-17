@@ -13,7 +13,7 @@
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
         FontFamily="Consolas">
     <WrapPanel Margin="0 0 8 8">
-        <materialDesign:Card Width="430" Height="290">
+        <materialDesign:Card Width="430" Height="290" Margin="8 8 0 0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -92,27 +92,44 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="290" Margin="5 0 0 0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBox
-                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                    VerticalAlignment="Top"
-                    materialDesign:HintAssist.Hint="Полный путь до базы">
-                    <TextBox.Text>
-                        <Binding Path="SelectedBase.Folder" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBox.Text>
-                </TextBox>
-            </Grid>
+        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="290" Margin="8 8 0 0">
+            <StackPanel>
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Полный путь"
+                         Text="{Binding SelectedBase.Folder}"
+                         Margin="8 8 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Пользователь"
+                         Text="{Binding SelectedBase.User}"
+                         Margin="8 0 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Пароль"
+                         Text="{Binding SelectedBase.Password}"
+                         Margin="8 0 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Путь хранилища"
+                         Text="{Binding SelectedBase.RepositoryPath}"
+                         Margin="8 8 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Пользователь хранилища"
+                         Text="{Binding SelectedBase.RepositoryUser}"
+                         Margin="8 0 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Пароль хранилища"
+                         Text="{Binding SelectedBase.RepositoryPass}"
+                         Margin="8 0 0 0"
+                         VerticalAlignment="Bottom" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Ключ обновления телеграм"
+                         Text="{Binding SelectedBase.Telegram}"
+                         Margin="8 8 0 0"
+                         VerticalAlignment="Bottom" />
+            </StackPanel>
         </materialDesign:Card>
     </WrapPanel>
 </Window>
