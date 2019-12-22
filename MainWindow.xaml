@@ -76,14 +76,14 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>-->
                 </DataGrid>
-                <Button Grid.Row="1" HorizontalAlignment="Left" Margin="10, 0"
+                <Button Grid.Row="1" HorizontalAlignment="Right" Margin="60, 0"
                         Command="{Binding AddBaseCommand}"
                         Height="40" Width="40"
                         Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                         ToolTip="Добавить базу">
                     <materialDesign:PackIcon Kind="DatabaseAdd" Height="25" Width="25" />
                 </Button>
-                <Button Grid.Row="1" HorizontalAlignment="Left" Margin="60, 0"
+                <Button Grid.Row="1" HorizontalAlignment="Right" Margin="10, 0"
                         Command="{Binding SaveBasesCommand}"
                         Height="40" Width="40"
                         Style="{StaticResource MaterialDesignFloatingActionLightButton}"
@@ -92,42 +92,38 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="290" Margin="8 8 0 0">
-            <StackPanel>
+        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="280" Margin="8 8 0 0">
+            <StackPanel Margin="8 0 0 0">
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Полный путь"
                          Text="{Binding SelectedBase.Folder}"
-                         Margin="8 8 0 0"
+                         Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь"
                          Text="{Binding SelectedBase.User}"
-                         Margin="8 0 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пароль"
                          Text="{Binding SelectedBase.Password}"
-                         Margin="8 0 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Путь хранилища"
                          Text="{Binding SelectedBase.RepositoryPath}"
-                         Margin="8 8 0 0"
+                         Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь хранилища"
                          Text="{Binding SelectedBase.RepositoryUser}"
-                         Margin="8 0 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пароль хранилища"
                          Text="{Binding SelectedBase.RepositoryPass}"
-                         Margin="8 0 0 0"
                          VerticalAlignment="Bottom" />
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Ключ обновления телеграм"
                          Text="{Binding SelectedBase.Telegram}"
-                         Margin="8 8 0 0"
+                         Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
             </StackPanel>
         </materialDesign:Card>

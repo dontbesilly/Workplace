@@ -8,6 +8,8 @@
 *.sln.docstates
 *.db
 Constants.cs
+*.vscode
+*.code-workspace
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

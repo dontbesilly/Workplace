@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
+using telega;
 
 namespace Workplace1c
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
         private WorkplaceContext db;
+        private Telega telega;
         public ObservableCollection<Base> Bases { get; set; }
 
         private Base selectedBase;
@@ -89,6 +90,8 @@ namespace Workplace1c
             db.Bases.Load();
 
             Bases = db.Bases.Local.ToObservableCollection();
+            telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
+            telega.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
