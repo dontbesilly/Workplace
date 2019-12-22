@@ -13,7 +13,7 @@
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
         FontFamily="Consolas">
     <WrapPanel Margin="0 0 8 8">
-        <materialDesign:Card Width="430" Height="290" Margin="8 8 0 0">
+        <materialDesign:Card Height="400" Width="430" Margin="8 8 0 0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -58,7 +58,6 @@
                                         Command="{Binding Path=DataContext.DeleteBaseCommand,
                                     RelativeSource={RelativeSource FindAncestor,
                                     AncestorType={x:Type DataGrid}}}"
-                                        CommandParameter="{Binding SelectedBase}"
                                         Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                                         ToolTip="Удалить">
                                             <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
@@ -92,7 +91,7 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="280" Margin="8 8 0 0">
+        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="280" Margin="8 0 0 0">
             <StackPanel Margin="8 0 0 0">
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Полный путь"
