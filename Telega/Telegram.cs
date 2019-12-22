@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using MihaZupan;
 using Telegram.Bot;
-using Workplace1c;
 
-namespace telega
+namespace Workplace1c
 {
     class Telega
     {

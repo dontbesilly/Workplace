@@ -1,6 +1,4 @@
-﻿using Workplace1c;
-
-namespace telega
+﻿namespace Workplace1c
 {
     enum TelegramBots
     {

@@ -12,7 +12,7 @@
         materialDesign:TransitionAssist.DisableTransitions="True"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
         FontFamily="Consolas">
-    <WrapPanel Margin="0 0 8 8">
+    <WrapPanel>
         <materialDesign:Card Height="400" Width="430" Margin="8 8 0 0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -91,8 +91,9 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Visibility="{Binding BaseParamsCardVisibility}" Width="300" Height="280" Margin="8 0 0 0">
-            <StackPanel Margin="8 0 0 0">
+        <materialDesign:Card Height="290" Width="300" Margin="8" VerticalAlignment="Top"
+            Visibility="{Binding BaseParamsCardVisibility}" >
+            <StackPanel Margin="8">
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Полный путь"
                          Text="{Binding SelectedBase.Folder}"
