@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        Title="Рабочее место" Height="450" Width="800"
+        Title="Рабочее место" Height="450" Width="900"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         materialDesign:TransitionAssist.DisableTransitions="True"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
@@ -27,7 +27,7 @@
                   materialDesign:DataGridAssist.CellPadding="13 7 7 7"
                   materialDesign:DataGridAssist.ColumnHeaderPadding="7">
                     <DataGrid.Columns>
-                        <materialDesign:DataGridTextColumn Width="125"
+                        <materialDesign:DataGridTextColumn Width="155"
                     Binding="{Binding Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     MaxLength="255"
                     Header="Наименование"
@@ -38,13 +38,13 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </materialDesign:DataGridTextColumn>
-                        <DataGridCheckBoxColumn Width="115"
+                        <DataGridCheckBoxColumn Width="100"
                     Header="Серверная"
                     Binding="{Binding Path=IsServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                     EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
                         </DataGridCheckBoxColumn>
-                        <DataGridCheckBoxColumn Width="115"
+                        <DataGridCheckBoxColumn Width="100"
                     Header="Хранилище"
                     Binding="{Binding Path=IsRepository, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
@@ -91,41 +91,49 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Height="290" Width="300" Margin="8" VerticalAlignment="Top"
+        <StackPanel>
+            <materialDesign:Card Height="150" Width="300" Margin="8" VerticalAlignment="Top"
             Visibility="{Binding BaseParamsCardVisibility}" >
-            <StackPanel Margin="8">
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                <StackPanel Margin="8">
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Полный путь"
                          Text="{Binding SelectedBase.Folder}"
                          Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь"
                          Text="{Binding SelectedBase.User}"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пароль"
                          Text="{Binding SelectedBase.Password}"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Height="190" Width="300" Margin="8" VerticalAlignment="Top"
+            Visibility="{Binding BaseParamsCardVisibility}" >
+                <StackPanel Margin="8">
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Путь хранилища"
                          Text="{Binding SelectedBase.RepositoryPath}"
                          Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь хранилища"
                          Text="{Binding SelectedBase.RepositoryUser}"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пароль хранилища"
                          Text="{Binding SelectedBase.RepositoryPass}"
                          VerticalAlignment="Bottom" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Ключ обновления телеграм"
                          Text="{Binding SelectedBase.Telegram}"
                          Margin="0 8 0 0"
                          VerticalAlignment="Bottom" />
-            </StackPanel>
-        </materialDesign:Card>
+                </StackPanel>
+            </materialDesign:Card>
+
+        </StackPanel>
     </WrapPanel>
 </Window>

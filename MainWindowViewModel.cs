@@ -90,7 +90,7 @@ namespace Workplace1c
 
             Bases = db.Bases.Local.ToObservableCollection();
             telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
-            telega.Start();
+            //telega.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
