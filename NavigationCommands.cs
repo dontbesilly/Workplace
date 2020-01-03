@@ -8,5 +8,6 @@ namespace Workplace1c
     public static class NavigationCommands
     {
         public static RoutedCommand OpenBasesCommand = new RoutedCommand();
+        public static RoutedCommand OpenActionsCommand = new RoutedCommand();
     }
 }

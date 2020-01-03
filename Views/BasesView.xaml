@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Workplace1c"
+             xmlns:local="clr-namespace:Workplace1c.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <WrapPanel>
@@ -105,7 +105,7 @@
                 </StackPanel>
             </materialDesign:Card>
             <materialDesign:Card Height="190" Width="300" Margin="8 0 8 8" VerticalAlignment="Top"
-            Visibility="{Binding BaseParamsCardVisibility}" >
+            Visibility="{Binding RepoCardVisibility}" >
                 <StackPanel Margin="8">
                     <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Путь хранилища"

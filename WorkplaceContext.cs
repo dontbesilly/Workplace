@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 namespace Workplace1c
 {
     class WorkplaceContext : DbContext

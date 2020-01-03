@@ -21,8 +21,12 @@
                                     HorizontalAlignment="Right" Margin="16"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                     <StackPanel>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Content="Управление базами" 
-                                Command="{x:Static local:NavigationCommands.OpenBasesCommand}"/>
+                        <Button HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Список баз 1с" Content="Управление базами" 
+                            Command="{x:Static local:NavigationCommands.OpenBasesCommand}"/>
+                        <Button HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Действия" Content="Управление действиями" 
+                            Command="{x:Static local:NavigationCommands.OpenActionsCommand}"/>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
