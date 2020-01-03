@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Workplace1c.Views;
 
 namespace Workplace1c
 {
@@ -81,8 +83,14 @@ namespace Workplace1c
             }
         }
 
+        public MainWindow MainWindow { get; private set; }
+        public BasesView BasesView { get; private set; }
+
         public MainWindowViewModel()
         {
+            InitializeViews();
+            InitializeNavigationCommands();
+
             db = new WorkplaceContext();
             db.Database.EnsureCreated();
 
@@ -91,6 +99,29 @@ namespace Workplace1c
             Bases = db.Bases.Local.ToObservableCollection();
             telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
             //telega.Start();
+        }
+
+        public void InitMainWindow(MainWindow mainWindow)
+        {
+            MainWindow = mainWindow;
+            MainWindow.Show();
+        }
+
+        private void InitializeNavigationCommands()
+        {
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
+                new CommandBinding(NavigationCommands.OpenBasesCommand, OpenBasesCommandExecuted));
+        }
+
+        private void InitializeViews()
+        {
+            BasesView = new BasesView { DataContext = this };
+        }
+
+        private void OpenBasesCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow.FrameBody.NavigationService.Navigate(BasesView);
+            MainWindow.MenuToggleButton.IsChecked = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

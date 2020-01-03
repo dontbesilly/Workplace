@@ -16,8 +16,7 @@ namespace Workplace1c
         protected override void OnStartup(StartupEventArgs e)
         {
             var vm = new MainWindowViewModel();
-            var mw = new MainWindow { DataContext = vm };
-            mw.Show();
+            vm.InitMainWindow(new MainWindow { DataContext = vm });
         }
     }
 }
