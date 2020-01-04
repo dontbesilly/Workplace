@@ -86,10 +86,10 @@ namespace Workplace1c
         /// <summary>
         /// Выгружает конфигурацию .cf в каталог.
         /// </summary>
-        public async Task DumpConfiguration(string rootFolder, string release)
+        public async Task DumpConfiguration(string rootFolder, string fileName)
         {
             string arguments =
-                $"DESIGNER {serverOrFile} {currentBase.Folder} /N \"{currentBase.User}\" /DumpCfg {rootFolder}\\{release}.cf";
+                $"DESIGNER {serverOrFile} {currentBase.Folder} /N \"{currentBase.User}\" /DumpCfg {rootFolder}\\{fileName}.cf";
 
             await Task.Run(() => StartProcess(arguments));
         }
@@ -110,6 +110,17 @@ namespace Workplace1c
             string arguments =
                 $"DESIGNER {serverOrFile} {currentBase.Folder} /N \"{currentBase.User}\" {repository} /CreateDistributionFiles -cffile " +
                 $"{newCf}";
+
+            await Task.Run(() => StartProcess(arguments));
+        }
+
+        /// <summary>
+        /// Выгружает базу в файл .dt
+        /// </summary>
+        public async Task DumpBase(string rootFolder, string fileName)
+        {
+            string arguments =
+                $"DESIGNER {serverOrFile} {currentBase.Folder} /N \"{currentBase.User}\" /DumpIB {rootFolder}\\{fileName}.dt";
 
             await Task.Run(() => StartProcess(arguments));
         }

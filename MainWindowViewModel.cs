@@ -11,7 +11,9 @@ namespace Workplace1c
     {
         public MainWindow MainWindow { get; private set; }
         public BasesView BasesView { get; private set; }
+        public BasesViewModel BasesViewModel { get; private set; }
         public ActionsView ActionsView { get; private set; }
+        public ActionsViewModel ActionsViewModel { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -34,8 +36,10 @@ namespace Workplace1c
         }
         private void InitializeViews()
         {
-            BasesView = new BasesView { DataContext = new BasesViewModel() };
-            ActionsView = new ActionsView { DataContext = new ActionsViewModel() };
+            BasesViewModel = new BasesViewModel();
+            BasesView = new BasesView { DataContext = BasesViewModel };
+            ActionsViewModel = new ActionsViewModel(this);
+            ActionsView = new ActionsView { DataContext = ActionsViewModel };
         }
 
         private void OpenActionsCommandExecuted(object sender, ExecutedRoutedEventArgs e)

@@ -7,16 +7,27 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <WrapPanel>
-        <ListView ItemsSource="{Binding Activities}"
-                  SelectedItem="{Binding Path=SelectedActivity}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <materialDesign:Card Height="200" Width="200" Margin="8">
-
+        <materialDesign:Card Height="200" Width="250" Margin="8">
+            <StackPanel Margin="8">
+                <TextBlock
+                    Margin="16 16 12 8"
+                    FontSize="14" Text="Выгрузка базы"/>
+                <Separator Style="{StaticResource MaterialDesignDarkSeparator}" />
+                <ComboBox materialDesign:HintAssist.Hint="База"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                          ItemsSource="{Binding Path=Bases}"
+                          DisplayMemberPath="Title"
+                          SelectedItem="{Binding SelectedBaseUnload}" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Путь для выгрузки"
+                         Text="{Binding UnloadBasePath}"
+                         VerticalAlignment="Bottom" />
+                <Button Margin="12" Width="100"
+                        HorizontalAlignment="Left"
+                        Command="{Binding UnloadBaseCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Content="Выгрузить"/>
+            </StackPanel>
         </materialDesign:Card>
     </WrapPanel>
 </UserControl>

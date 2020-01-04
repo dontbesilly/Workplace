@@ -1,36 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
 using Workplace1c.Distribution;
+using Workplace1c.Views;
 
 namespace Workplace1c.VewModels
 {
     class ActionsViewModel : INotifyPropertyChanged
     {
-        public Activity[] Activities { get; private set; }
-
-        private Activity selectedActivity;
-
-        public Activity SelectedActivity
+        public ObservableCollection<Base> Bases { get; }
+        
+        public ActionsViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            get => selectedActivity;
+            Bases = mainWindowViewModel.BasesViewModel.Bases;
+        }
+
+        #region UnloadBaseCard
+
+        private Base selectedBaseUnload;
+        public Base SelectedBaseUnload
+        {
+            get => selectedBaseUnload;
             set
             {
-                selectedActivity = value;
-                OnPropertyChanged(nameof(SelectedActivity));
+                selectedBaseUnload = value;
+                OnPropertyChanged(nameof(SelectedBaseUnload));
             }
         }
 
-        public ActionsViewModel()
+        private string unloadBasePath = "C:\\1cv8.dt";
+        public string UnloadBasePath
         {
-            Activities = new[]
+            get => unloadBasePath;
+            set
             {
-                new Activity{Name = "Выгрузка базы"},
-                new Activity{Name = "Загрузка базы"}
-            };
+                unloadBasePath = value;
+                OnPropertyChanged(nameof(UnloadBasePath));
+            }
         }
+
+        private RelayCommand unloadBaseCommand;
+        public RelayCommand UnloadBaseCommand
+        {
+            get
+            {
+                return unloadBaseCommand ??= new RelayCommand(obj =>
+                {
+                    if (selectedBaseUnload is null) return;
+                    Console.WriteLine(selectedBaseUnload.Title);
+                    Console.WriteLine(unloadBasePath);
+                });
+            }
+        }
+
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -9,4 +9,10 @@ namespace Workplace1c.Distribution
         public string Name { get; set; }
         public object Parameters { get; set; }
     }
+
+    class ActivityName
+    {
+        public const string UnloadBase = "UnloadBase";
+        public const string DownloadBase = "DownloadBase";
+    }
 }
