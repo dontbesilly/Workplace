@@ -92,11 +92,8 @@ namespace Workplace1c.VewModels
         {
             foreach (Platform platform in Platforms)
             {
-                if (File.Exists(platform.FullPath))
-                {
-                    platform.Exist = true;
-                    db.Platforms.Update(platform);
-                }
+                platform.Exist = File.Exists(platform.FullPath);
+                db.Platforms.Update(platform);
             }
             db.SaveChanges();
         }
