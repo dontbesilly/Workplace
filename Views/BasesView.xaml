@@ -69,6 +69,12 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>-->
                 </DataGrid>
+                <materialDesign:ColorZone
+                    Mode="Accent"
+                    Grid.Row="1"
+                    Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                    <TextBlock Margin="16" Text="Базы 1с"/>
+                </materialDesign:ColorZone>
                 <Button Grid.Row="1" HorizontalAlignment="Right" Margin="60, 0"
                         Command="{Binding AddBaseCommand}"
                         Height="40" Width="40"

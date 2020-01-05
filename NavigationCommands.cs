@@ -9,5 +9,6 @@ namespace Workplace1c
     {
         public static RoutedCommand OpenBasesCommand = new RoutedCommand();
         public static RoutedCommand OpenActionsCommand = new RoutedCommand();
+        public static RoutedCommand OpenPlatformsCommand = new RoutedCommand();
     }
 }

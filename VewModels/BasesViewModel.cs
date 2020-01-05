@@ -12,6 +12,16 @@ namespace Workplace1c.VewModels
         private Telega telega;
         public ObservableCollection<Base> Bases { get; set; }
 
+        public BasesViewModel(WorkplaceContext db)
+        {
+            db.Bases.Load();
+            Bases = db.Bases.Local.ToObservableCollection();
+            this.db = db;
+
+            telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
+            //telega.Start();
+        }
+
         private Base selectedBase;
         public Base SelectedBase
         {
@@ -90,18 +100,6 @@ namespace Workplace1c.VewModels
                 repoCardVisibility = value;
                 OnPropertyChanged(nameof(RepoCardVisibility));
             }
-        }
-
-        public BasesViewModel()
-        {
-            db = new WorkplaceContext();
-            db.Database.EnsureCreated();
-
-            db.Bases.Load();
-
-            Bases = db.Bases.Local.ToObservableCollection();
-            telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
-            //telega.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

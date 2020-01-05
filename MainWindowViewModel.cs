@@ -9,14 +9,21 @@ namespace Workplace1c
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
+        private WorkplaceContext db;
+
         public MainWindow MainWindow { get; private set; }
         public BasesView BasesView { get; private set; }
         public BasesViewModel BasesViewModel { get; private set; }
         public ActionsView ActionsView { get; private set; }
         public ActionsViewModel ActionsViewModel { get; private set; }
+        public PlatformView PlatformView { get; private set; }
+        public PlatformViewModel PlatformViewModel { get; private set; }
 
         public MainWindowViewModel()
         {
+            db = new WorkplaceContext();
+            db.Database.EnsureCreated();
+
             InitializeViews();
             InitializeNavigationCommands();
         }
@@ -33,11 +40,15 @@ namespace Workplace1c
                 new CommandBinding(NavigationCommands.OpenBasesCommand, OpenBasesCommandExecuted));
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
                 new CommandBinding(NavigationCommands.OpenActionsCommand, OpenActionsCommandExecuted));
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
+                new CommandBinding(NavigationCommands.OpenPlatformsCommand, OpenPlatformsCommandExecuted));
         }
         private void InitializeViews()
         {
-            BasesViewModel = new BasesViewModel();
+            BasesViewModel = new BasesViewModel(db);
             BasesView = new BasesView { DataContext = BasesViewModel };
+            PlatformViewModel = new PlatformViewModel(db);
+            PlatformView = new PlatformView { DataContext = PlatformViewModel };
             ActionsViewModel = new ActionsViewModel(this);
             ActionsView = new ActionsView { DataContext = ActionsViewModel };
         }
@@ -51,6 +62,12 @@ namespace Workplace1c
         private void OpenBasesCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow.FrameBody.NavigationService.Navigate(BasesView);
+            MainWindow.MenuToggleButton.IsChecked = false;
+        }
+
+        private void OpenPlatformsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow.FrameBody.NavigationService.Navigate(PlatformView);
             MainWindow.MenuToggleButton.IsChecked = false;
         }
 
