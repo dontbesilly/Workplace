@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Workplace1c.Distribution
+namespace Workplace1c.Distribution1c
 {
     class Activity
     {

@@ -95,6 +95,7 @@ namespace Workplace1c.VewModels
                 platform.Exist = File.Exists(platform.FullPath);
                 db.Platforms.Update(platform);
             }
+            // TODO добавить обход по всем платформам сравнивая фулл патс в папках PF x86 и PF 
             db.SaveChanges();
         }
 

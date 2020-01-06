@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Workplace1c.Distribution
+namespace Workplace1c.Distribution1c
 {
     class Distribution : INotifyPropertyChanged
     {
@@ -28,11 +28,11 @@ namespace Workplace1c.Distribution
 
         public Platform Platform { get; set; }
 
-        public ObservableCollection<string> Releases { get; set; }
+        public ObservableCollection<Release> Releases { get; set; }
 
         public Distribution()
         {
-            Releases = new ObservableCollection<string>();
+            Releases = new ObservableCollection<Release>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

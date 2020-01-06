@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-using Workplace1c.Distribution;
+using Workplace1c.Distribution1c;
 using Workplace1c.Views;
 
 namespace Workplace1c.VewModels
