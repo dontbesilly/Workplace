@@ -15,12 +15,28 @@ namespace Workplace1c.VewModels
         private WorkplaceContext db;
 
         public ObservableCollection<Distribution> Distributions { get; set; }
+        public ObservableCollection<Base> Bases { get; }
+        public ObservableCollection<Platform> Platforms { get; }
 
         public DistributionViewModel(WorkplaceContext db)
         {
+            db.Releases.Load();
             db.Distributions.Load();
             Distributions = db.Distributions.Local.ToObservableCollection();
+            Bases = db.Bases.Local.ToObservableCollection();
+            Platforms = db.Platforms.Local.ToObservableCollection();
             this.db = db;
+        }
+
+        private Release selectedRelease;
+        public Release SelectedRelease
+        {
+            get => selectedRelease;
+            set
+            {
+                selectedRelease = value;
+                OnPropertyChanged(nameof(SelectedRelease));
+            }
         }
 
         private Distribution selectedDistribution;
@@ -46,6 +62,35 @@ namespace Workplace1c.VewModels
                         Name = "Новая сборка"
                     };
                     db.Distributions.Add(distr);
+                    db.SaveChanges();
+                });
+            }
+        }
+
+        private RelayCommand addReleaseCommand;
+        public RelayCommand AddReleaseCommand
+        {
+            get
+            {
+                return addReleaseCommand ??= new RelayCommand(obj =>
+                {
+                    if (selectedDistribution is null) return;
+                    var release = new Release { Name = "0.0.0.0", Distribution = selectedDistribution };
+                    db.Releases.Add(release);
+                    db.SaveChanges();
+                });
+            }
+        }
+
+        private RelayCommand deleteReleaseCommand;
+        public RelayCommand DeleteReleaseCommand
+        {
+            get
+            {
+                return deleteReleaseCommand ??= new RelayCommand(obj =>
+                {
+                    if (selectedDistribution is null && selectedRelease is null) return;
+                    db.Releases.Remove(selectedRelease);
                     db.SaveChanges();
                 });
             }

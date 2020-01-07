@@ -53,7 +53,7 @@ namespace Workplace1c
             BasesView = new BasesView { DataContext = BasesViewModel };
             PlatformViewModel = new PlatformViewModel(db);
             PlatformView = new PlatformView { DataContext = PlatformViewModel };
-            ActionsViewModel = new ActionsViewModel(this);
+            ActionsViewModel = new ActionsViewModel(db);
             ActionsView = new ActionsView { DataContext = ActionsViewModel };
             DistributionViewModel = new DistributionViewModel(db);
             DistributionView = new DistributionView { DataContext = DistributionViewModel };

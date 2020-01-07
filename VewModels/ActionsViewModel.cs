@@ -14,9 +14,9 @@ namespace Workplace1c.VewModels
     {
         public ObservableCollection<Base> Bases { get; }
         
-        public ActionsViewModel(MainWindowViewModel mainWindowViewModel)
+        public ActionsViewModel(WorkplaceContext db)
         {
-            Bases = mainWindowViewModel.BasesViewModel.Bases;
+            Bases = db.Bases.Local.ToObservableCollection();
         }
 
         #region UnloadBaseCard
