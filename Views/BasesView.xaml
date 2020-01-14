@@ -11,7 +11,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <DataGrid Margin="0 8 0 0"  Grid.Row="0" IsSynchronizedWithCurrentItem="True"
                   ItemsSource="{Binding Bases}" 
@@ -92,14 +92,27 @@
             </Grid>
         </materialDesign:Card>
         <StackPanel>
-            <materialDesign:Card Height="150" Width="300" Margin="8" VerticalAlignment="Top"
+            <materialDesign:Card Height="150" Width="350" Margin="8" VerticalAlignment="Top"
             Visibility="{Binding BaseParamsCardVisibility}" >
                 <StackPanel Margin="8">
-                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Margin="0 8 8 0"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Полный путь"
-                         Text="{Binding SelectedBase.Folder}"
-                         Margin="0 8 0 0"
+                         Text="{Binding SelectedBase.Folder}"                         
                          VerticalAlignment="Bottom" />
+                        <Button Grid.Column="1"
+                          Width="23" Height="23"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                          Style="{StaticResource MaterialDesignIconButton}"
+                          Background="{DynamicResource MaterialDesignTextFieldBoxBackground}">
+                            <materialDesign:PackIcon Kind="DotsHorizontal" HorizontalAlignment="Center" />
+                        </Button>
+                    </Grid>
                     <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь"
                          Text="{Binding SelectedBase.User}"
@@ -110,14 +123,28 @@
                          VerticalAlignment="Bottom" />
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Height="190" Width="300" Margin="8 0 8 8" VerticalAlignment="Top"
+            <materialDesign:Card Height="190" Width="350" Margin="8 0 8 8" VerticalAlignment="Top"
             Visibility="{Binding RepoCardVisibility}" >
                 <StackPanel Margin="8">
-                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Путь хранилища"
                          Text="{Binding SelectedBase.RepositoryPath}"
-                         Margin="0 8 0 0"
+                         Margin="0 8 8 0"
                          VerticalAlignment="Bottom" />
+                        <Button Grid.Column="1"
+                          Width="23" Height="23"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                          Style="{StaticResource MaterialDesignIconButton}"
+                          Background="{DynamicResource MaterialDesignTextFieldBoxBackground}">
+                            <materialDesign:PackIcon Kind="DotsHorizontal" HorizontalAlignment="Center" />
+                        </Button>
+                    </Grid>
                     <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Пользователь хранилища"
                          Text="{Binding SelectedBase.RepositoryUser}"
