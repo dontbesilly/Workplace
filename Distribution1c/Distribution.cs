@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Workplace1c.Distribution1c
 {
@@ -44,19 +40,13 @@ namespace Workplace1c.Distribution1c
             set { testCatalog = value; OnPropertyChanged(nameof(TestCatalog)); }
         }
 
-        [NotMapped]
-        public Release CurrentRelease { get; set; }
         public Platform Platform { get; set; }
 
         public ObservableCollection<Release> Releases { get; set; }
 
-        [NotMapped]        
-        public ObservableCollection<Release> PreviousReleases { get; set; }
-
         public Distribution()
         {
             Releases = new ObservableCollection<Release>();
-            PreviousReleases = new ObservableCollection<Release>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

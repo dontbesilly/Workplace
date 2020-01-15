@@ -10,10 +10,9 @@
         <materialDesign:Card Height="400" Width="250" Margin="8 8 8 8" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition
-                            Height="Auto" />
-                    <RowDefinition
-                            Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <DataGrid Grid.Row="1" IsSynchronizedWithCurrentItem="True"
                       HeadersVisibility="None"
@@ -35,6 +34,12 @@
                         </materialDesign:DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                <materialDesign:ColorZone
+                    Mode="Accent"
+                    Grid.Row="2"
+                    Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                    <TextBlock Margin="16" Text="Сборки"/>
+                </materialDesign:ColorZone>
                 <Button Grid.Row="0" Width="40" Height="40" Margin="0 2 110 2"
                         Style="{StaticResource MaterialDesignIconButton}"
                         Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
@@ -61,10 +66,9 @@
         <materialDesign:Card  Height="400" Width="200" Margin="0 8 8 8" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition
-                            Height="Auto" />
-                    <RowDefinition
-                            Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <DataGrid Grid.Row="1" IsSynchronizedWithCurrentItem="True"
                           ItemsSource="{Binding SelectedDistribution.Releases}"
@@ -100,11 +104,17 @@
                             ToolTip="Удалить релиз">
                     <materialDesign:PackIcon Kind="Delete" Height="22" Width="22" />
                 </Button>
+                <materialDesign:ColorZone
+                    Mode="Accent"
+                    Grid.Row="2"
+                    Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                    <TextBlock Margin="16" Text="Релизы сборки"/>
+                </materialDesign:ColorZone>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card  Height="200" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
+        <materialDesign:Card  Height="300" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
             <StackPanel>
-                <ComboBox Margin="5 0 5 0"
+                <ComboBox Margin="5"
                     materialDesign:HintAssist.Hint="Платформа для сборки"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -114,8 +124,19 @@
                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      materialDesign:HintAssist.Hint="Корневой каталог сборки"
                      Text="{Binding Path=SelectedDistribution.RootFolder}"
-                     Margin="5 0 5 0"
-                     VerticalAlignment="Bottom" />
+                     Margin="5" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:HintAssist.Hint="Префикс базы"
+                     Text="{Binding Path=SelectedDistribution.Prefix}"
+                     Margin="5" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:HintAssist.Hint="Номер сервера лицензий"
+                     Text="{Binding Path=SelectedDistribution.LicenseServerRelease}"
+                     Margin="5" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:HintAssist.Hint="Каталог тестирования"
+                     Text="{Binding Path=SelectedDistribution.TestCatalog}"
+                     Margin="5" />
             </StackPanel>
         </materialDesign:Card>
     </WrapPanel>
