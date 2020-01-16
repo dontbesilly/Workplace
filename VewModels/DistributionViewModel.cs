@@ -16,11 +16,9 @@ namespace Workplace1c.VewModels
 
         public DistributionViewModel(WorkplaceContext db)
         {
-            db.Releases.Load();
-            db.Distributions.Load();
-            Distributions = db.Distributions.Local.ToObservableCollection();
-            Bases = db.Bases.Local.ToObservableCollection();
-            Platforms = db.Platforms.Local.ToObservableCollection();
+            Distributions = db.GetDistributionsLocal();
+            Bases = db.GetBasesLocal();
+            Platforms = db.GetPlatformsLocal();
             this.db = db;
         }
 
@@ -57,8 +55,7 @@ namespace Workplace1c.VewModels
                     {
                         Name = "Новая сборка"
                     };
-                    db.Distributions.Add(distr);
-                    db.SaveChanges();
+                    db.AddDistribution(distr);
                 });
             }
         }
@@ -72,8 +69,7 @@ namespace Workplace1c.VewModels
                 {
                     if (selectedDistribution is null) return;
                     var release = new Release { Name = "0.0.0.0", Distribution = selectedDistribution };
-                    db.Releases.Add(release);
-                    db.SaveChanges();
+                    db.AddRelease(release);
                 });
             }
         }
@@ -86,8 +82,7 @@ namespace Workplace1c.VewModels
                 return deleteReleaseCommand ??= new RelayCommand(obj =>
                 {
                     if (selectedDistribution is null && selectedRelease is null) return;
-                    db.Releases.Remove(selectedRelease);
-                    db.SaveChanges();
+                    db.RemoveRelease(selectedRelease);
                 });
             }
         }

@@ -14,8 +14,7 @@ namespace Workplace1c.VewModels
 
         public HomeViewModel(WorkplaceContext db)
         {
-            db.DistributionActions.Load();
-            DistributionActions = db.DistributionActions.Local.ToObservableCollection();
+            DistributionActions = db.GetDistributionActionsLocal();
             this.db = db;
         }
     }

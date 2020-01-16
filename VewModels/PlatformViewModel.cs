@@ -17,8 +17,7 @@ namespace Workplace1c.VewModels
 
         public PlatformViewModel(WorkplaceContext db)
         {
-            db.Platforms.Load();
-            Platforms = db.Platforms.Local.ToObservableCollection();
+            Platforms = db.GetPlatformsLocal();
             this.db = db;
             CheckPlatforms();
         }

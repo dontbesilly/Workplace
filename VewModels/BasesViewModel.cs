@@ -14,8 +14,7 @@ namespace Workplace1c.VewModels
 
         public BasesViewModel(WorkplaceContext db)
         {
-            db.Bases.Load();
-            Bases = db.Bases.Local.ToObservableCollection();
+            Bases = db.GetBasesLocal();
             this.db = db;
 
             telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");

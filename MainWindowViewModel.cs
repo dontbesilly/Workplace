@@ -24,7 +24,6 @@ namespace Workplace1c
         public MainWindowViewModel()
         {
             db = new WorkplaceContext();
-            db.Database.EnsureCreated();
 
             InitializeViews();
             InitializeNavigationCommands();
