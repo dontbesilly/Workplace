@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -44,75 +45,44 @@ namespace Workplace1c.VewModels
             }
         }
 
-        private RelayCommand addDistributionCommand;
-        public RelayCommand AddDistributionCommand
+        public ICommand AddDistributionCommand => new RelayCommand(AddDistributionCommandExecuted);
+        public ICommand AddReleaseCommand => new RelayCommand(AddReleaseCommandExecuted);
+        public ICommand DeleteReleaseCommand => new RelayCommand(DeleteReleaseCommandExecuted);
+        public ICommand DeleteDistributionCommand => new RelayCommand(DeleteDistributionCommandExecuted);
+        public ICommand SaveDistributionsCommand => new RelayCommand(SaveDistributionsCommandExecuted);
+
+        private void AddDistributionCommandExecuted(object obj)
         {
-            get
+            var distr = new Distribution
             {
-                return addDistributionCommand ??= new RelayCommand(obj =>
-                {
-                    var distr = new Distribution
-                    {
-                        Name = "Новая сборка"
-                    };
-                    db.AddDistribution(distr);
-                });
-            }
+                Name = "Новая сборка"
+            };
+            db.AddDistribution(distr);
         }
 
-        private RelayCommand addReleaseCommand;
-        public RelayCommand AddReleaseCommand
+        private void AddReleaseCommandExecuted(object obj)
         {
-            get
-            {
-                return addReleaseCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedDistribution is null) return;
-                    var release = new Release { Name = "0.0.0.0", Distribution = selectedDistribution };
-                    db.AddRelease(release);
-                });
-            }
+            if (selectedDistribution is null) return;
+            var release = new Release { Name = "0.0.0.0", Distribution = selectedDistribution };
+            db.AddRelease(release);
         }
 
-        private RelayCommand deleteReleaseCommand;
-        public RelayCommand DeleteReleaseCommand
+        private void DeleteReleaseCommandExecuted(object obj)
         {
-            get
-            {
-                return deleteReleaseCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedDistribution is null && selectedRelease is null) return;
-                    db.RemoveRelease(selectedRelease);
-                });
-            }
+            if (selectedDistribution is null && selectedRelease is null) return;
+            db.RemoveRelease(selectedRelease);
         }
 
-        private RelayCommand deleteDistributionCommand;
-        public RelayCommand DeleteDistributionCommand
+        private void DeleteDistributionCommandExecuted(object obj)
         {
-            get
-            {
-                return deleteDistributionCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedDistribution is null) return;
-                    db.Distributions.Remove(selectedDistribution);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedDistribution is null) return;
+            db.RemoveDistribution(SelectedDistribution);
         }
 
-        private RelayCommand saveDistributionsCommand;
-        public RelayCommand SaveDistributionsCommand
+        private void SaveDistributionsCommandExecuted(object obj)
         {
-            get
-            {
-                return saveDistributionsCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedDistribution is null) return;
-                    db.Distributions.Update(selectedDistribution);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedDistribution is null) return;
+            db.UpdateDistribution(selectedDistribution);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

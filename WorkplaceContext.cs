@@ -41,6 +41,36 @@ namespace Workplace1c
             this.SaveChanges();
         }
 
+        public void AddBase(Base b)
+        {
+            this.Bases.Add(b);
+            this.SaveChanges();
+        }
+
+        public void RemoveBase(Base b)
+        {
+            this.Bases.Remove(b);
+            this.SaveChanges();
+        }
+
+        public void UpdateBase(Base b)
+        {
+            this.Bases.Update(b);
+            this.SaveChanges();
+        }
+
+        public void RemoveDistribution(Distribution distr)
+        {
+            this.Distributions.Remove(distr);
+            this.SaveChanges();
+        }
+
+        public void UpdateDistribution(Distribution distr)
+        {
+            this.Distributions.Update(distr);
+            this.SaveChanges();
+        }
+
         public ObservableCollection<Base> GetBasesLocal() => this.Bases.Local.ToObservableCollection();
         public ObservableCollection<Platform> GetPlatformsLocal() => this.Platforms.Local.ToObservableCollection();
         public ObservableCollection<Distribution> GetDistributionsLocal() => this.Distributions.Local.ToObservableCollection();

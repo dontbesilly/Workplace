@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Windows.Input;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -21,6 +22,10 @@ namespace Workplace1c.VewModels
             //telega.Start();
         }
 
+        public ICommand AddBaseCommand => new RelayCommand(AddBaseCommandExecuted);
+        public ICommand DeleteBaseCommand => new RelayCommand(DeleteBaseCommandExecuted);
+        public ICommand SaveBasesCommand => new RelayCommand(SaveBaseCommandExecuted);
+
         private Base selectedBase;
         public Base SelectedBase
         {
@@ -29,54 +34,31 @@ namespace Workplace1c.VewModels
             {
                 selectedBase = value;
                 BaseParamsCardVisibility = Visibility.Visible;
-                RepoCardVisibility = selectedBase.IsRepository ? Visibility.Visible : Visibility.Hidden;
                 OnPropertyChanged(nameof(SelectedBase));
+                if (selectedBase is null) return;
+                RepoCardVisibility = selectedBase.IsRepository ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
-        private RelayCommand addBaseCommand;
-        public RelayCommand AddBaseCommand
+        private void AddBaseCommandExecuted(object obj)
         {
-            get
+            var base1C = new Base
             {
-                return addBaseCommand ??= new RelayCommand(obj =>
-                {
-                    var base1C = new Base
-                    {
-                        Title = "Новая база"
-                    };
-                    db.Bases.Add(base1C);
-                    db.SaveChanges();
-                });
-            }
+                Title = "Новая база"
+            };
+            db.AddBase(base1C);
         }
 
-        private RelayCommand deleteBaseCommand;
-        public RelayCommand DeleteBaseCommand
+        private void DeleteBaseCommandExecuted(object obj)
         {
-            get
-            {
-                return deleteBaseCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedBase is null) return;
-                    db.Bases.Remove(selectedBase);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedBase is null) return;
+            db.RemoveBase(selectedBase);
         }
 
-        private RelayCommand saveBasesCommand;
-        public RelayCommand SaveBasesCommand
+        private void SaveBaseCommandExecuted(object obj)
         {
-            get
-            {
-                return saveBasesCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedBase is null) return;
-                    db.Bases.Update(selectedBase);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedBase is null) return;
+            db.UpdateBase(selectedBase);
         }
 
         private Visibility baseParamsCardVisibility = Visibility.Hidden;
