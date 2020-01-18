@@ -10,16 +10,12 @@ namespace Workplace1c.VewModels
     class BasesViewModel : INotifyPropertyChanged
     {
         private WorkplaceContext db;
-        private Telega telega;
         public ObservableCollection<Base> Bases { get; set; }
 
         public BasesViewModel(WorkplaceContext db)
         {
             Bases = db.GetBasesLocal();
             this.db = db;
-
-            telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
-            //telega.Start();
         }
 
         public ICommand AddBaseCommand => new RelayCommand(AddBaseCommandExecuted);

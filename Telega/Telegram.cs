@@ -13,8 +13,6 @@ namespace Workplace1c
         private readonly string platform;
         private readonly Server server = new Server(Constants.serverRef, Constants.adminUser, Constants.adminPass);
 
-        public List<int> ListId { get; set; } = Constants.ListId;
-
         public Telega(string token, IEnumerable<Base> bases, string platform)
         {
             this.token = token;
