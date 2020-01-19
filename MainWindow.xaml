@@ -11,7 +11,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         materialDesign:TransitionAssist.DisableTransitions="True"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel, d:IsDesignTimeCreatable=False}" 
-        FontFamily="Consolas">
+        FontFamily="Roboto">
     <materialDesign:DialogHost Identifier="RootDialog">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
@@ -21,6 +21,10 @@
                                     HorizontalAlignment="Right" Margin="16"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                     <StackPanel>
+                        <Button HorizontalAlignment="Stretch"
+                                Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Заглавная страница" 
+                                Content="Домой" HorizontalContentAlignment="Left"
+                                Command="{x:Static local:NavigationCommands.OpenHomeCommand}"/>
                         <Button HorizontalAlignment="Stretch"
                             Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Список баз 1с" 
                             Content="Базы 1с" HorizontalContentAlignment="Left"
@@ -37,6 +41,10 @@
                                 Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Сборки 1с" 
                                 Content="Создание сборок" HorizontalContentAlignment="Left"
                                 Command="{x:Static local:NavigationCommands.OpenDistributionsCommand}"/>
+                        <Button HorizontalAlignment="Stretch"
+                                Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Настройки бота телеграм" 
+                                Content="Настройка телеграм" HorizontalContentAlignment="Left"
+                                Command="{x:Static local:NavigationCommands.OpenTelegramCommand}"/>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

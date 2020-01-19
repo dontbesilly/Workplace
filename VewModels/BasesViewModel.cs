@@ -42,19 +42,19 @@ namespace Workplace1c.VewModels
             {
                 Title = "Новая база"
             };
-            db.AddBase(base1C);
+            db.AddEntity(base1C);
         }
 
         private void DeleteBaseCommandExecuted(object obj)
         {
             if (selectedBase is null) return;
-            db.RemoveBase(selectedBase);
+            db.RemoveEntity(selectedBase);
         }
 
         private void SaveBaseCommandExecuted(object obj)
         {
             if (selectedBase is null) return;
-            db.UpdateBase(selectedBase);
+            db.UpdateEntity(selectedBase);
         }
 
         private Visibility baseParamsCardVisibility = Visibility.Hidden;

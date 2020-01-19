@@ -1,10 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 using Workplace1c.Distribution1c;
 
 namespace Workplace1c
 {
-    class WorkplaceContext : DbContext
+    sealed class WorkplaceContext : DbContext
     {
         public TelegramSetting TelegramSetting;
 
@@ -43,76 +44,21 @@ namespace Workplace1c
 
         }
 
-        public void UpdateTelegramSetting(TelegramSetting telegramSetting)
-        {
-            this.TelegramSettings.Update(telegramSetting);
-            this.SaveChanges();
-        }
-
-
-        // TODO CRUD
         public void AddEntity<T>(T entity)
         {
-
-        }
-
-        public void AddTelegramBot(TelegramBot telegramBot)
-        {
-            this.TelegramBots.Add(telegramBot);
+            this.Add(entity);
             this.SaveChanges();
         }
 
-        public void RemoveTelegramBot(TelegramBot telegramBot)
+        public void RemoveEntity<T>(T entity)
         {
-            this.TelegramBots.Remove(telegramBot);
+            this.Remove(entity);
             this.SaveChanges();
         }
 
-        public void AddDistribution(Distribution distr)
+        public void UpdateEntity<T>(T entity)
         {
-            this.Distributions.Add(distr);
-            this.SaveChanges();
-        }
-
-        public void AddRelease(Release release)
-        {
-            this.Releases.Add(release);
-            this.SaveChanges();
-        }
-
-        public void RemoveRelease(Release release)
-        {
-            this.Releases.Remove(release);
-            this.SaveChanges();
-        }
-
-        public void AddBase(Base b)
-        {
-            this.Bases.Add(b);
-            this.SaveChanges();
-        }
-
-        public void RemoveBase(Base b)
-        {
-            this.Bases.Remove(b);
-            this.SaveChanges();
-        }
-
-        public void UpdateBase(Base b)
-        {
-            this.Bases.Update(b);
-            this.SaveChanges();
-        }
-
-        public void RemoveDistribution(Distribution distr)
-        {
-            this.Distributions.Remove(distr);
-            this.SaveChanges();
-        }
-
-        public void UpdateDistribution(Distribution distr)
-        {
-            this.Distributions.Update(distr);
+            this.Update(entity);
             this.SaveChanges();
         }
 
@@ -120,6 +66,7 @@ namespace Workplace1c
         public ObservableCollection<Platform> GetPlatformsLocal() => this.Platforms.Local.ToObservableCollection();
         public ObservableCollection<Distribution> GetDistributionsLocal() => this.Distributions.Local.ToObservableCollection();
         public ObservableCollection<DistributionAction> GetDistributionActionsLocal() => this.DistributionActions.Local.ToObservableCollection();
+        public ObservableCollection<TelegramBot> GetTelegramBotsLocal() => this.TelegramBots.Local.ToObservableCollection();
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=workplace.db");

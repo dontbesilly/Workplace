@@ -7,7 +7,7 @@ using Workplace1c.Distribution1c;
 
 namespace Workplace1c.VewModels
 {
-    class DistributionViewModel
+    class DistributionViewModel : INotifyPropertyChanged
     {
         private WorkplaceContext db;
 
@@ -57,32 +57,32 @@ namespace Workplace1c.VewModels
             {
                 Name = "Новая сборка"
             };
-            db.AddDistribution(distr);
+            db.AddEntity(distr);
         }
 
         private void AddReleaseCommandExecuted(object obj)
         {
             if (selectedDistribution is null) return;
             var release = new Release { Name = "0.0.0.0", Distribution = selectedDistribution };
-            db.AddRelease(release);
+            db.AddEntity(release);
         }
 
         private void DeleteReleaseCommandExecuted(object obj)
         {
             if (selectedDistribution is null && selectedRelease is null) return;
-            db.RemoveRelease(selectedRelease);
+            db.RemoveEntity(selectedRelease);
         }
 
         private void DeleteDistributionCommandExecuted(object obj)
         {
             if (selectedDistribution is null) return;
-            db.RemoveDistribution(SelectedDistribution);
+            db.RemoveEntity(SelectedDistribution);
         }
 
         private void SaveDistributionsCommandExecuted(object obj)
         {
             if (selectedDistribution is null) return;
-            db.UpdateDistribution(selectedDistribution);
+            db.UpdateEntity(selectedDistribution);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

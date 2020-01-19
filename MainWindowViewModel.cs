@@ -20,6 +20,10 @@ namespace Workplace1c
         public PlatformViewModel PlatformViewModel { get; private set; }
         public DistributionView DistributionView { get; private set; }
         public DistributionViewModel DistributionViewModel { get; private set; }
+        public HomeView HomeView { get; private set; }
+        public HomeViewModel HomeViewModel { get; private set; }
+        public TelegramView TelegramView { get; private set; }
+        public TelegramViewModel TelegramViewModel { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -33,10 +37,13 @@ namespace Workplace1c
         {
             MainWindow = mainWindow;
             MainWindow.Show();
+            MainWindow.FrameBody.NavigationService.Navigate(HomeView);
         }
 
         private void InitializeNavigationCommands()
         {
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
+                new CommandBinding(NavigationCommands.OpenHomeCommand, OpenHomeCommandExecuted));
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
                 new CommandBinding(NavigationCommands.OpenBasesCommand, OpenBasesCommandExecuted));
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
@@ -45,7 +52,10 @@ namespace Workplace1c
                 new CommandBinding(NavigationCommands.OpenPlatformsCommand, OpenPlatformsCommandExecuted));
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
                 new CommandBinding(NavigationCommands.OpenDistributionsCommand, OpenDistributionsCommandExecuted));
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
+                new CommandBinding(NavigationCommands.OpenTelegramCommand, OpenTelegramCommandExecuted));
         }
+
         private void InitializeViews()
         {
             BasesViewModel = new BasesViewModel(db);
@@ -56,6 +66,10 @@ namespace Workplace1c
             ActionsView = new ActionsView { DataContext = ActionsViewModel };
             DistributionViewModel = new DistributionViewModel(db);
             DistributionView = new DistributionView { DataContext = DistributionViewModel };
+            HomeViewModel = new HomeViewModel(db);
+            HomeView = new HomeView { DataContext = HomeViewModel };
+            TelegramViewModel = new TelegramViewModel(db);
+            TelegramView = new TelegramView { DataContext = TelegramViewModel };
         }
 
         private void OpenActionsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -79,6 +93,18 @@ namespace Workplace1c
         private void OpenDistributionsCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow.FrameBody.NavigationService.Navigate(DistributionView);
+            MainWindow.MenuToggleButton.IsChecked = false;
+        }
+
+        private void OpenTelegramCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow.FrameBody.NavigationService.Navigate(TelegramView);
+            MainWindow.MenuToggleButton.IsChecked = false;
+        }
+
+        private void OpenHomeCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow.FrameBody.NavigationService.Navigate(HomeView);
             MainWindow.MenuToggleButton.IsChecked = false;
         }
 

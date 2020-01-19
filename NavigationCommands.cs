@@ -11,5 +11,7 @@ namespace Workplace1c
         public static RoutedCommand OpenActionsCommand = new RoutedCommand();
         public static RoutedCommand OpenPlatformsCommand = new RoutedCommand();
         public static RoutedCommand OpenDistributionsCommand = new RoutedCommand();
+        public static RoutedCommand OpenHomeCommand = new RoutedCommand();
+        public static RoutedCommand OpenTelegramCommand = new RoutedCommand();
     }
 }

@@ -5,10 +5,16 @@ namespace Workplace1c
 {
     public class TelegramBot : INotifyPropertyChanged
     {
-        string token = "";
-        int chatId = 1;
+        string token = "", name = "";
+        int chatId;
 
         public int Id { get; set; }
+
+        public string Name
+        {
+            get => name;
+            set { name = value; OnPropertyChanged(nameof(Name)); }
+        }
 
         public string Token
         {
