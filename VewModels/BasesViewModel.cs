@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace Workplace1c.VewModels
 {
@@ -11,6 +13,10 @@ namespace Workplace1c.VewModels
     {
         private WorkplaceContext db;
         public ObservableCollection<Base> Bases { get; set; }
+
+        public string ServerPath { get; set; }
+        public string AdminUser { get; set; }
+        public string AdminPass { get; set; }
 
         public BasesViewModel(WorkplaceContext db)
         {
@@ -21,6 +27,30 @@ namespace Workplace1c.VewModels
         public ICommand AddBaseCommand => new RelayCommand(AddBaseCommandExecuted);
         public ICommand DeleteBaseCommand => new RelayCommand(DeleteBaseCommandExecuted);
         public ICommand SaveBasesCommand => new RelayCommand(SaveBaseCommandExecuted);
+        public ICommand ScanServerCommand => new RelayCommand(ScanServerCommandExecuted);
+
+        private void ScanServerCommandExecuted(object obj)
+        {
+            try
+            {
+                var server = new Server(ServerPath, AdminUser, AdminPass);
+                foreach (var serverBaseName in server.GetBases())
+                {
+                    if (Bases.FirstOrDefault(b => b.Title == serverBaseName) is null)
+                    {
+                        var base1C = new Base
+                        {
+                            Title = serverBaseName
+                        };
+                        db.AddEntity(base1C);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
 
         private Base selectedBase;
         public Base SelectedBase

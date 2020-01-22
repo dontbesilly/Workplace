@@ -4,8 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Workplace1c.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
-    <Grid>
-            
-    </Grid>
+    <WrapPanel>
+        <materialDesign:Card Height="200" Width="250" Margin="8">
+            <StackPanel Margin="8">
+                <TextBlock
+                    Margin="16 16 12 8"
+                    FontSize="14" Text="Обновление базы"/>
+                <Separator Style="{StaticResource MaterialDesignDarkSeparator}" />
+                <ComboBox materialDesign:HintAssist.Hint="База"
+                          materialDesign:TextFieldAssist.HasClearButton="True"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                          ItemsSource="{Binding Path=Bases}"
+                          DisplayMemberPath="Title"
+                          SelectedItem="{Binding SelectedBaseUpdate}" />
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Чат ID"
+                         Text="{Binding UnloadBasePath}"
+                         VerticalAlignment="Bottom" />
+                <Button Margin="12" Width="100"
+                        HorizontalAlignment="Right"
+                        Command="{Binding UnloadBaseCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Content="Обновить"/>
+            </StackPanel>
+        </materialDesign:Card>
+    </WrapPanel>
 </UserControl>

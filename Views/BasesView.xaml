@@ -160,7 +160,31 @@
                          VerticalAlignment="Bottom" />
                 </StackPanel>
             </materialDesign:Card>
-
         </StackPanel>
+        <materialDesign:Card Height="160" Width="350" Margin="8" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBox Margin="8 0"
+                    materialDesign:HintAssist.Hint="Полный путь к серверу"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding ServerPath}"
+                    VerticalAlignment="Center"/>
+                <TextBox Margin="8 0"
+                         materialDesign:HintAssist.Hint="Имя админа"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding AdminUser}"
+                         VerticalAlignment="Center"/>
+                <TextBox Margin="8 0"
+                         materialDesign:HintAssist.Hint="Пароль админа"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding AdminPass}"
+                         VerticalAlignment="Center"/>
+                <Button Margin="8"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ScanServerCommand}"
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton"
+                    Content="Сканировать"/>
+            </StackPanel>
+        </materialDesign:Card>
     </WrapPanel>
 </UserControl>

@@ -12,10 +12,12 @@ namespace Workplace1c.VewModels
         private WorkplaceContext db;
 
         public ObservableCollection<DistributionAction> DistributionActions { get; set; }
+        public ObservableCollection<Base> Bases { get; set; }
 
         public HomeViewModel(WorkplaceContext db)
         {
             DistributionActions = db.GetDistributionActionsLocal();
+            Bases = db.GetBasesLocal();
             this.db = db;
         }
 

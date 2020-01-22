@@ -1,4 +1,5 @@
-﻿using System.Runtime.ExceptionServices;
+﻿using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Windows;
 
@@ -56,6 +57,22 @@ namespace Workplace1c
             {
                 throw new System.Exception("Не найдена база на сервере!");
             }
+        }
+
+        public IEnumerable<string> GetBases()
+        {
+            var agent = new V83.COMConnector().ConnectAgent($"tcp://{serverRef}");
+            V83.IClusterInfo cluster = (V83.IClusterInfo)agent.GetClusters().GetValue(0);
+            agent.Authenticate(cluster, adminUser, adminPass);
+            var bases = agent.GetInfoBases(cluster);
+
+            List<string> listBases = new List<string>();
+            foreach (V83.IInfoBaseShort item in bases)
+            {
+                listBases.Add(item.Name);
+            }
+
+            return listBases;
         }
 
         [HandleProcessCorruptedStateExceptions]
