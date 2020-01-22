@@ -42,7 +42,8 @@ namespace Workplace1c.VewModels
                 {
                     var platfrorm1c = new Platform
                     {
-                        Name = "8.3.15.1700"
+                        Name = "8.3.15.0000",
+                        FullPath = "C:\\Program Files\\1cv8\\8.3.15.0000\\bin\\1cv8.exe"
                     };
                     db.Platforms.Add(platfrorm1c);
                     db.SaveChanges();

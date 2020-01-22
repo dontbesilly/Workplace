@@ -82,6 +82,12 @@
                         ToolTip="Добавить базу">
                     <materialDesign:PackIcon Kind="DatabaseAdd" Height="25" Width="25" />
                 </Button>
+                <Button Grid.Row="1" Margin="110 0"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        HorizontalAlignment="Right"
+                        Command="{Binding ScanServerCommand}"
+                        ToolTip="Resource name: MaterialDesignRaisedLightButton"
+                        Content="Добавить серверные"/>
                 <Button Grid.Row="1" HorizontalAlignment="Right" Margin="10, 0"
                         Command="{Binding SaveBasesCommand}"
                         Height="40" Width="40"
@@ -161,30 +167,5 @@
                 </StackPanel>
             </materialDesign:Card>
         </StackPanel>
-        <materialDesign:Card Height="160" Width="350" Margin="8" VerticalAlignment="Top">
-            <StackPanel>
-                <TextBox Margin="8 0"
-                    materialDesign:HintAssist.Hint="Полный путь к серверу"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding ServerPath}"
-                    VerticalAlignment="Center"/>
-                <TextBox Margin="8 0"
-                         materialDesign:HintAssist.Hint="Имя админа"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                         Text="{Binding AdminUser}"
-                         VerticalAlignment="Center"/>
-                <TextBox Margin="8 0"
-                         materialDesign:HintAssist.Hint="Пароль админа"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                         Text="{Binding AdminPass}"
-                         VerticalAlignment="Center"/>
-                <Button Margin="8"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}"
-                    HorizontalAlignment="Left"
-                    Command="{Binding ScanServerCommand}"
-                    ToolTip="Resource name: MaterialDesignRaisedLightButton"
-                    Content="Сканировать"/>
-            </StackPanel>
-        </materialDesign:Card>
     </WrapPanel>
 </UserControl>

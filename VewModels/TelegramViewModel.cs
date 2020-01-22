@@ -16,11 +16,13 @@ namespace Workplace1c.VewModels
         private WorkplaceContext db;
 
         public ObservableCollection<TelegramBot> TelegramBots { get; set; }
+        public ObservableCollection<Platform> Platforms { get; set; }
         public Visibility BotParamsCardVisibility { get; set; } = Visibility.Hidden;
 
         public TelegramViewModel(WorkplaceContext db)
         {
             TelegramBots = db.GetTelegramBotsLocal();
+            Platforms = db.GetPlatformsLocal();
             this.db = db;
             telegramSetting = db.TelegramSetting;
         }

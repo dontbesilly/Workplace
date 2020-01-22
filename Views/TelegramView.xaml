@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <WrapPanel>
-        <materialDesign:Card  Height="250" Width="250" Margin="8" VerticalAlignment="Top">
+        <materialDesign:Card  Height="280" Width="250" Margin="8" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -50,7 +50,7 @@
                         Width="40" Height="40"
                         Style="{StaticResource MaterialDesignIconButton}"
                         Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
-                        ToolTip="Сохранить бота">
+                        ToolTip="Изменить бота">
                     <materialDesign:PackIcon Kind="Edit" Height="22" Width="22" />
                 </Button>
                 <Button Grid.Row="0" Margin="0 0 95 -20" 
@@ -64,5 +64,47 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
+        <StackPanel>
+            <materialDesign:Card Height="280" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
+                <StackPanel Margin="8 0">
+                    <ComboBox materialDesign:HintAssist.Hint="Бот для команд"
+                              materialDesign:TextFieldAssist.HasClearButton="True"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              ItemsSource="{Binding Path=TelegramBots}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding TelegramSetting.CommandBot}" />
+                    <ComboBox materialDesign:HintAssist.Hint="Бот для сообщений"
+                              materialDesign:TextFieldAssist.HasClearButton="True"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              ItemsSource="{Binding Path=TelegramBots}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding TelegramSetting.ChatBot}" />
+                    <ComboBox materialDesign:HintAssist.Hint="Платформа"
+                              materialDesign:TextFieldAssist.HasClearButton="True"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              ItemsSource="{Binding Path=Platforms}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding TelegramSetting.Platform}" />
+                    <TextBox materialDesign:HintAssist.Hint="Полный путь к серверу"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding TelegramSetting.ServerPath}"
+                             VerticalAlignment="Center"/>
+                    <TextBox materialDesign:HintAssist.Hint="Имя админа"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding TelegramSetting.ServerAdminUserName}"
+                             VerticalAlignment="Center"/>
+                    <TextBox materialDesign:HintAssist.Hint="Пароль админа"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding TelegramSetting.ServerAdminPass}"
+                             VerticalAlignment="Center"/>
+                    <Button Margin="8"
+                            Style="{StaticResource MaterialDesignRaisedLightButton}"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SaveSettingsCommand}"
+                            ToolTip="Сохранить настройки телеграм"
+                            Content="Сохранить"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
     </WrapPanel>
 </UserControl>

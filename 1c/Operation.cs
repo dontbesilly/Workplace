@@ -18,7 +18,7 @@ namespace Workplace1c
         public Operation(Base currentBase, string platformVerison)
         {
             this.currentBase = currentBase;
-            this.platformVerison = $@"C:\Program Files\1cv8\{platformVerison}\bin\1cv8.exe";
+            this.platformVerison = platformVerison;
             serverOrFile = currentBase.IsServer ? "/S" : "/F";
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using MihaZupan;
@@ -8,128 +9,154 @@ namespace Workplace1c
 {
     class Telega
     {
-        private readonly string token;
         private readonly IEnumerable<Base> bases;
-        private readonly string platform;
-        private readonly Server server = new Server(Constants.serverRef, Constants.adminUser, Constants.adminPass);
+        private readonly TelegramSetting setting;
+        private readonly Server server;
+        private readonly TelegramBotClient bot;
 
-        public Telega(string token, IEnumerable<Base> bases, string platform)
+        public bool IsReceiving => bot.IsReceiving;
+
+        public Telega(IEnumerable<Base> bases, TelegramSetting setting)
         {
-            this.token = token;
+            this.setting = setting;
             this.bases = bases;
-            this.platform = platform;
+            this.server = new Server(setting.ServerPath, setting.ServerAdminUserName, setting.ServerAdminPass);
+
+            HttpToSocks5Proxy proxy = Constants.proxy;
+            proxy.ResolveHostnamesLocally = true;
+
+            bot = new TelegramBotClient(setting.CommandBot.Token, proxy);
+            bot.OnMessage += OnMessage;
         }
 
         public void Start()
         {
-            HttpToSocks5Proxy proxy = Constants.proxy;
-            proxy.ResolveHostnamesLocally = true;
+            bot.StartReceiving();
+        }
 
-            TelegramBotClient Bot = new TelegramBotClient(token, proxy);
-
-            Bot.OnMessage += OnMessage;
-
-            Bot.StartReceiving();
+        public void Stop()
+        {
+            bot.StopReceiving();
         }
 
         private void OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             string MsgTxt = e.Message.Text;
-
             int chatId = e.Message.From.Id;
-
-            if (!Constants.checkChatId(chatId))
-            {
-                SendMessage($"Пользователь {chatId} хочет добавиться", TelegramBots.BitFinanceCommand, Constants.ilyaChat);
-                return;
-            }
 
             if (MsgTxt is null) return;
 
-            if (MsgTxt.ToLower().Contains("kick"))
-            {
-                Kick(MsgTxt, chatId);
-                return;
-            }
-
-            TelegramBots bot;
-            if (MsgTxt.ToLower().Contains("my"))
-            {
-                bot = TelegramBots.BitFinanceCommand;
-            }
-            else
-            {
-                chatId = 0;
-                bot = TelegramBots.BitFinanceTeam;
-            }
-
             try
             {
-                var b = bases.Where(x => x.Telegram == MsgTxt).FirstOrDefault();
+                var b = bases.FirstOrDefault(x => x.Telegram == MsgTxt);
                 if (b is null) return;
-                ThreadPool.QueueUserWorkItem(delegate { UpdateBase(b, bot, chatId); });
+                ThreadPool.QueueUserWorkItem(obj => { UpdateBase(b, chatId); });
             }
-            catch { }
-        }
-
-        private void Kick(string msg, int chatId)
-        {
-            try
+            catch (Exception exception)
             {
-                string[] arr = msg.Split(' ');
-                string baseName = arr[1];
-                server.ClearSessions(baseName, 10);
-                SendMessage($"Пользователи успешно выпнуты.", TelegramBots.BitFinanceCommand, chatId);
-            }
-            catch
-            {
-                string text = "Ошибка. Проверьте правильность написания базы. Регистр Важен!";
-                SendMessage(text, TelegramBots.BitFinanceCommand, chatId);
+                Console.WriteLine(exception.Message);
             }
         }
 
-        private async void UpdateBase(Base b, TelegramBots bot, int chatId)
+        #region old
+
+        //private void OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
+        //{
+        //    string MsgTxt = e.Message.Text;
+
+        //    int chatId = e.Message.From.Id;
+
+        //    if (!Constants.checkChatId(chatId))
+        //    {
+        //        SendMessage($"Пользователь {chatId} хочет добавиться", TelegramBots.BitFinanceCommand, Constants.ilyaChat);
+        //        return;
+        //    }
+
+        //    if (MsgTxt is null) return;
+
+        //    if (MsgTxt.ToLower().Contains("kick"))
+        //    {
+        //        Kick(MsgTxt, chatId);
+        //        return;
+        //    }
+
+        //    TelegramBots bot;
+        //    if (MsgTxt.ToLower().Contains("my"))
+        //    {
+        //        bot = TelegramBots.BitFinanceCommand;
+        //    }
+        //    else
+        //    {
+        //        chatId = 0;
+        //        bot = TelegramBots.BitFinanceTeam;
+        //    }
+
+        //    try
+        //    {
+        //        var b = bases.Where(x => x.Telegram == MsgTxt).FirstOrDefault();
+        //        if (b is null) return;
+        //        ThreadPool.QueueUserWorkItem(delegate { UpdateBase(b, bot, chatId); });
+        //    }
+        //    catch { }
+        //}
+
+        //private void Kick(string msg, int chatId)
+        //{
+        //    try
+        //    {
+        //        string[] arr = msg.Split(' ');
+        //        string baseName = arr[1];
+        //        server.ClearSessions(baseName, 10);
+        //        SendMessage($"Пользователи успешно выпнуты.", TelegramBots.BitFinanceCommand, chatId);
+        //    }
+        //    catch
+        //    {
+        //        string text = "Ошибка. Проверьте правильность написания базы. Регистр Важен!";
+        //        SendMessage(text, TelegramBots.BitFinanceCommand, chatId);
+        //    }
+        //}
+
+        private async void UpdateBase(Base b, int chatId)
         {
-            SendMessage($"{b.Title} обновляется", bot, chatId);
+            SendMessage($"{b.Title} обновляется", chatId);
             if (b.IsServer)
             {
                 try
                 {
                     var spl = b.Folder.Split('\u005c');
-                    string serverRef = spl[0];
                     string baseRef = spl[1];
                     server.ClearSessions(baseRef, 15000);
                 }
                 catch (System.Exception err)
                 {
-                    SendMessage("Не смог подключиться к серверу и не выбил пользователей" + err, TelegramBots.BitFinanceCommand, chatId);
-                    SendMessage($"{b.Title} обновляется", bot, chatId);
+                    SendMessage("Не смог подключиться к серверу и не выбил пользователей" + err, chatId);
+                    SendMessage($"{b.Title} обновляется", chatId);
                 }
             }
             try
             {
-                Operation op = new Operation(b, platform);
-                await op.UpdateRepository();
-                SendMessage($"{b.Title} обновлена", bot, chatId);
+                //Operation op = new Operation(b, setting.Platform.FullPath);
+                //await op.UpdateRepository();
+                SendMessage($"{b.Title} обновлена", chatId);
             }
             catch
             {
-                SendMessage("Неведомая ошибка", bot, chatId);
+                SendMessage("Неведомая ошибка", chatId);
             }
         }
 
-        public static int SendMessage(string message, TelegramBots bot, int chatId = 0)
-        {
-            TelegramDescription descr = new TelegramDescription(bot);
+        #endregion
 
-            int thisChatId = chatId != 0 ? chatId : descr.ChatId;
+        public int SendMessage(string message, int chatId)
+        {
+            //TelegramDescription descr = new TelegramDescription(bot);
 
             var proxy = Constants.proxy;
 
             proxy.ResolveHostnamesLocally = true;
 
-            TelegramBotClient Bot = new TelegramBotClient(descr.Token, proxy);
-            var msg = Bot.SendTextMessageAsync(thisChatId, message);
+            TelegramBotClient Bot = new TelegramBotClient(setting.CommandBot.Token, proxy);
+            var msg = Bot.SendTextMessageAsync(chatId, message);
 
             return msg.Id;
         }

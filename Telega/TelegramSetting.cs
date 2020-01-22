@@ -10,10 +10,17 @@ namespace Workplace1c
         public ObservableCollection<ChatId> ApprovedChatIds { get; set; }
 
         private int adminChatId;
-        private string serverAdminUserName = "", serverAdminPass = "";
+        private string serverAdminUserName = "", serverAdminPass = "", serverPath = "";
         private TelegramBot commandBot, chatBot;
+        private Platform platform;
 
         public int Id { get; set; }
+
+        public Platform Platform
+        {
+            get => platform;
+            set { platform = value; OnPropertyChanged(nameof(Platform)); }
+        }
 
         public TelegramBot CommandBot
         {
@@ -32,6 +39,13 @@ namespace Workplace1c
             get => adminChatId;
             set { adminChatId = value; OnPropertyChanged(nameof(AdminChatId)); }
         }
+
+        public string ServerPath
+        {
+            get => serverPath;
+            set { serverPath = value; OnPropertyChanged(nameof(ServerPath)); }
+        }
+
 
         public string ServerAdminUserName
         {

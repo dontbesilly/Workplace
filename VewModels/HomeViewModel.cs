@@ -10,24 +10,35 @@ namespace Workplace1c.VewModels
     class HomeViewModel
     {
         private WorkplaceContext db;
+        private readonly Telega telega;
 
         public ObservableCollection<DistributionAction> DistributionActions { get; set; }
         public ObservableCollection<Base> Bases { get; set; }
+        public TelegramSetting TelegramSetting { get; set; }
+        public bool BotReceiving { get; set; }
 
         public HomeViewModel(WorkplaceContext db)
         {
             DistributionActions = db.GetDistributionActionsLocal();
             Bases = db.GetBasesLocal();
             this.db = db;
+            TelegramSetting = db.TelegramSetting;
+
+            telega = new Telega(Bases, TelegramSetting);
+
         }
 
         public ICommand StartTelegramCommand => new RelayCommand(StartTelegramCommandExecuted);
+        public ICommand StopTelegramCommand => new RelayCommand(StopTelegramCommandExecuted);
 
         private void StartTelegramCommandExecuted(object obj)
         {
-            // telega = new Telega(Constants.BitfinanceCommandToken, Bases, "8.3.15.1778");
-            //telega.Start();
+            telega.Start();
+        }
 
+        private void StopTelegramCommandExecuted(object obj)
+        {
+            telega.Stop();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Workplace1c
 {
-    class Platform : INotifyPropertyChanged
+    public class Platform : INotifyPropertyChanged
     {
         private string name = "", fullPath = "";
         private bool exist = false;

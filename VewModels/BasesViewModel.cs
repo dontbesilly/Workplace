@@ -13,15 +13,13 @@ namespace Workplace1c.VewModels
     {
         private WorkplaceContext db;
         public ObservableCollection<Base> Bases { get; set; }
-
-        public string ServerPath { get; set; }
-        public string AdminUser { get; set; }
-        public string AdminPass { get; set; }
+        public TelegramSetting TelegramSetting { get; set; }
 
         public BasesViewModel(WorkplaceContext db)
         {
             Bases = db.GetBasesLocal();
             this.db = db;
+            TelegramSetting = db.TelegramSetting;
         }
 
         public ICommand AddBaseCommand => new RelayCommand(AddBaseCommandExecuted);
@@ -33,7 +31,7 @@ namespace Workplace1c.VewModels
         {
             try
             {
-                var server = new Server(ServerPath, AdminUser, AdminPass);
+                var server = new Server(TelegramSetting.ServerPath, TelegramSetting.ServerAdminUserName, TelegramSetting.ServerAdminPass);
                 foreach (var serverBaseName in server.GetBases())
                 {
                     if (Bases.FirstOrDefault(b => b.Title == serverBaseName) is null)
