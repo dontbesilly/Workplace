@@ -135,8 +135,8 @@ namespace Workplace1c
             }
             try
             {
-                //Operation op = new Operation(b, setting.Platform.FullPath);
-                //await op.UpdateRepository();
+                Operation op = new Operation(b, setting.Platform.FullPath);
+                await op.UpdateRepository();
                 SendMessage($"{b.Title} обновлена", chatId);
             }
             catch

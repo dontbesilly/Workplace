@@ -86,7 +86,7 @@
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         HorizontalAlignment="Right"
                         Command="{Binding ScanServerCommand}"
-                        ToolTip="Resource name: MaterialDesignRaisedLightButton"
+                        ToolTip="Сканировать серверные базы по настройке сервера"
                         Content="Добавить серверные"/>
                 <Button Grid.Row="1" HorizontalAlignment="Right" Margin="10, 0"
                         Command="{Binding SaveBasesCommand}"
@@ -130,7 +130,7 @@
                 </StackPanel>
             </materialDesign:Card>
             <materialDesign:Card Height="190" Width="350" Margin="8 0 8 8" VerticalAlignment="Top"
-            Visibility="{Binding RepoCardVisibility}" >
+                Visibility="{Binding BaseParamsCardVisibility}">
                 <StackPanel Margin="8">
                     <Grid>
                         <Grid.ColumnDefinitions>
