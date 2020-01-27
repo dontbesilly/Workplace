@@ -13,6 +13,7 @@ namespace Workplace1c
         private readonly TelegramSetting setting;
         private readonly Server server;
         private readonly TelegramBotClient bot;
+        private readonly HttpToSocks5Proxy proxy;
 
         public bool IsReceiving => bot.IsReceiving;
 
@@ -22,10 +23,17 @@ namespace Workplace1c
             this.bases = bases;
             this.server = new Server(setting.ServerPath, setting.ServerAdminUserName, setting.ServerAdminPass);
 
-            HttpToSocks5Proxy proxy = Constants.proxy;
-            proxy.ResolveHostnamesLocally = true;
+            if (setting.UseProxy)
+            {
+                proxy = new HttpToSocks5Proxy(setting.HostNameProxy, setting.PortProxy, setting.UserNameProxy, setting.PasswordProxy);
+                proxy.ResolveHostnamesLocally = true;
+                bot = new TelegramBotClient(setting.CommandBot.Token, proxy);
+            }
+            else
+            {
+                bot = new TelegramBotClient(setting.CommandBot.Token);
+            }
 
-            bot = new TelegramBotClient(setting.CommandBot.Token, proxy);
             bot.OnMessage += OnMessage;
         }
 
@@ -151,13 +159,19 @@ namespace Workplace1c
         {
             //TelegramDescription descr = new TelegramDescription(bot);
 
-            var proxy = Constants.proxy;
-
-            proxy.ResolveHostnamesLocally = true;
-
-            TelegramBotClient Bot = new TelegramBotClient(setting.CommandBot.Token, proxy);
-            var msg = Bot.SendTextMessageAsync(chatId, message);
-
+            TelegramBotClient botSender;
+            if (setting.ChatBot is null)
+            {
+                botSender = bot;
+            }
+            else
+            {
+                botSender = setting.UseProxy
+                    ? new TelegramBotClient(setting.ChatBot.Token, proxy)
+                    : new TelegramBotClient(setting.ChatBot.Token);
+            }
+            
+            var msg = botSender.SendTextMessageAsync(chatId, message);
             return msg.Id;
         }
     }

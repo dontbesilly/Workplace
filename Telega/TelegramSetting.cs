@@ -13,8 +13,61 @@ namespace Workplace1c
         private string serverAdminUserName = "", serverAdminPass = "", serverPath = "";
         private TelegramBot commandBot, chatBot;
         private Platform platform;
+        private bool useProxy = false;
+        private string hostNameProxy = "", userNameProxy = "", passwordProxy = "";
+        private int portProxy = 0;
 
         public int Id { get; set; }
+
+        public bool UseProxy
+        {
+            get => useProxy;
+            set
+            {
+                useProxy = value;
+                OnPropertyChanged(nameof(UseProxy));
+            }
+        }
+
+        public string HostNameProxy
+        {
+            get => hostNameProxy;
+            set
+            {
+                hostNameProxy = value;
+                OnPropertyChanged(nameof(HostNameProxy));
+            }
+        }
+
+        public string UserNameProxy
+        {
+            get => userNameProxy;
+            set
+            {
+                userNameProxy = value;
+                OnPropertyChanged(nameof(UserNameProxy));
+            }
+        }
+
+        public string PasswordProxy
+        {
+            get => passwordProxy;
+            set
+            {
+                passwordProxy = value;
+                OnPropertyChanged(nameof(PasswordProxy));
+            }
+        }
+
+        public int PortProxy
+        {
+            get => portProxy;
+            set
+            {
+                portProxy = value;
+                OnPropertyChanged(nameof(PortProxy));
+            }
+        }
 
         public Platform Platform
         {
