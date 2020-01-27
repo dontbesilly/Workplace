@@ -5,7 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Workplace1c.VewModels
 {
@@ -26,6 +29,20 @@ namespace Workplace1c.VewModels
         public ICommand DeleteBaseCommand => new RelayCommand(DeleteBaseCommandExecuted);
         public ICommand SaveBasesCommand => new RelayCommand(SaveBaseCommandExecuted);
         public ICommand ScanServerCommand => new RelayCommand(ScanServerCommandExecuted);
+        public ICommand ChangeFolderCommand => new RelayCommand(ChangeFolderCommandExecuted);
+
+        private void ChangeFolderCommandExecuted(object obj)
+        {
+            if (SelectedBase is null) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = SelectedBase.Folder;
+            DialogResult result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                SelectedBase.Folder = dialog.SelectedPath;
+            }
+        }
 
         private void ScanServerCommandExecuted(object obj)
         {

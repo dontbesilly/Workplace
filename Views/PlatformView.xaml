@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <WrapPanel>
-        <materialDesign:Card Height="400" Width="500" Margin="8 8 8 8" VerticalAlignment="Top">
+        <materialDesign:Card Height="550" Width="500" Margin="8 8 8 8" VerticalAlignment="Top">
             <Border
                 BorderThickness="1"
                 BorderBrush="{DynamicResource PrimaryHueMidBrush}"
@@ -32,7 +32,7 @@
                                 Binding="{Binding Path=Exist, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                                
+
                             </DataGridCheckBoxColumn>
                             <materialDesign:DataGridTextColumn 
                                 Width="100"
@@ -61,11 +61,12 @@
                                     <DataTemplate>
                                         <StackPanel>
                                             <Button Height="30" Width="30"
-                                        Command="{Binding Path=DataContext.DeletePlatformCommand,
-                                    RelativeSource={RelativeSource FindAncestor,
-                                    AncestorType={x:Type DataGrid}}}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                        ToolTip="Удалить">
+                                                Command="{Binding Path=DataContext.DeletePlatformCommand,
+                                                RelativeSource={RelativeSource FindAncestor,
+                                                AncestorType={x:Type DataGrid}}}"
+                                                Style="{StaticResource MaterialDesignIconButton}"
+                                                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                                                ToolTip="Удалить">
                                                 <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
                                             </Button>
                                         </StackPanel>
@@ -74,35 +75,30 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <materialDesign:ColorZone
-                        Mode="Accent"
-                        Grid.Row="1"
-                        Effect="{DynamicResource MaterialDesignShadowDepth5}">
-                        <TextBlock Margin="16" Text="Платформы 1с"/>
+                    <materialDesign:ColorZone Mode="Standard" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                        <TextBlock Margin="16" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="Платформы 1с"/>
                     </materialDesign:ColorZone>
-                    <Button Width="40" Height="40"
-                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        Command="{Binding AddPlatformCommand}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                        Grid.Row="1"
-                        Margin="0 0 110 5">
-                        <materialDesign:PackIcon Kind="Plus" Height="22" Width="22" />
-                    </Button>
-                    <Button Width="40" Height="40"
-                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        Command="{Binding SavePlatformsCommand}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                        Grid.Row="1"
-                        Margin="0 0 60 5">
-                        <materialDesign:PackIcon Kind="ContentSave" Height="22" Width="22" />
-                    </Button>
-                    <Button Width="40" Height="40"
-                            Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                    <Button Grid.Row="1" Margin="100 0"
+                            Height="40"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
                             Command="{Binding CheckPlatformsCommand}"
-                            VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Grid.Row="1"
-                            Margin="0 0 10 5">
-                        <materialDesign:PackIcon Kind="Check" Height="22" Width="22" />
+                            ToolTip="Проверить есть ли платформа на компьютере"
+                            Content="Проверить"/>
+                    <Button Grid.Row="1" Margin="0 0 50 0" Width="40" Height="40"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                            Command="{Binding AddPlatformCommand}"
+                            VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <materialDesign:PackIcon Kind="DatabaseAdd" Height="22" Width="22" />
+                    </Button>
+                    <Button Grid.Row="1" Margin="0 0 5 0" Width="40" Height="40"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                            Command="{Binding SavePlatformsCommand}"
+                            VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <materialDesign:PackIcon Kind="ContentSave" Height="22" Width="22" />
                     </Button>
                 </Grid>
             </Border>
