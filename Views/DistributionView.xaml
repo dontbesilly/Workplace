@@ -7,14 +7,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <WrapPanel>
-        <materialDesign:Card Height="400" Width="250" Margin="8 8 8 8" VerticalAlignment="Top">
+        <materialDesign:Card Height="300" Width="250" Margin="8 8 8 8" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="1" IsSynchronizedWithCurrentItem="True"
+                <DataGrid Grid.Row="0" IsSynchronizedWithCurrentItem="True"
                       HeadersVisibility="None"
                       ItemsSource="{Binding Distributions}" 
                       SelectedItem="{Binding SelectedDistribution}"
@@ -34,43 +33,39 @@
                         </materialDesign:DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <materialDesign:ColorZone
-                    Mode="Accent"
-                    Grid.Row="2"
-                    Effect="{DynamicResource MaterialDesignShadowDepth5}">
-                    <TextBlock Margin="16" Text="Сборки"/>
+                <materialDesign:ColorZone Mode="Standard" Grid.Row="2" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Margin="16" Text="Сборки"/>
                 </materialDesign:ColorZone>
-                <Button Grid.Row="0" Width="40" Height="40" Margin="0 2 110 2"
+                <Button Grid.Row="1" Width="40" Height="40" Margin="0 0 95 0"
                         Style="{StaticResource MaterialDesignIconButton}"
                         Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                         Command="{Binding AddDistributionCommand}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        HorizontalAlignment="Right">
                     <materialDesign:PackIcon Kind="Plus" Height="22" Width="22" />
                 </Button>
-                <Button Grid.Row="0" Width="40" Height="40" Margin="0 2 60 2"
+                <Button Grid.Row="1" Width="40" Height="40" Margin="0 0 50 0"
                         Style="{StaticResource MaterialDesignIconButton}"
                         Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                         Command="{Binding SaveDistributionsCommand}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        HorizontalAlignment="Right">
                     <materialDesign:PackIcon Kind="ContentSave" Height="22" Width="22" />
                 </Button>
-                <Button Grid.Row="0" Width="40" Height="40" Margin="0 2 10 2"
+                <Button Grid.Row="1" Width="40" Height="40" Margin="0 0 5 0"
                             Style="{StaticResource MaterialDesignIconButton}"
                             Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                             Command="{Binding DeleteDistributionCommand}"
-                            VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            HorizontalAlignment="Right">
                     <materialDesign:PackIcon Kind="Delete" Height="22" Width="22" />
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card  Height="400" Width="200" Margin="0 8 8 8" VerticalAlignment="Top">
+        <materialDesign:Card  Height="300" Width="200" Margin="0 8 8 8" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="1" IsSynchronizedWithCurrentItem="True"
+                <DataGrid Grid.Row="0" IsSynchronizedWithCurrentItem="True"
                           ItemsSource="{Binding SelectedDistribution.Releases}"
                           SelectedItem="{Binding SelectedRelease}"
                           CanUserSortColumns="True" 
@@ -90,54 +85,64 @@
                         </materialDesign:DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Grid.Row="0" Margin="0 2 60 2" HorizontalAlignment="Right" Width="40" Height="40"
+                <materialDesign:ColorZone Mode="Standard" Grid.Row="2" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Margin="16" Text="Релизы"/>
+                </materialDesign:ColorZone>
+                <Button Grid.Row="1" Margin="0 0 50 0" HorizontalAlignment="Right" Width="40" Height="40"
                             Command="{Binding AddReleaseCommand}"
                             Style="{StaticResource MaterialDesignIconButton}"
                             Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                             ToolTip="Добавить релиз">
                     <materialDesign:PackIcon Kind="Plus" Height="22" Width="22" />
                 </Button>
-                <Button Grid.Row="0" Margin="0 2 10 2" HorizontalAlignment="Right" Width="40" Height="40"
+                <Button Grid.Row="1" Margin="0 0 5 0" HorizontalAlignment="Right" Width="40" Height="40"
                             Command="{Binding DeleteReleaseCommand}"
                             Style="{StaticResource MaterialDesignIconButton}"
                             Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                             ToolTip="Удалить релиз">
                     <materialDesign:PackIcon Kind="Delete" Height="22" Width="22" />
                 </Button>
-                <materialDesign:ColorZone
-                    Mode="Accent"
-                    Grid.Row="2"
-                    Effect="{DynamicResource MaterialDesignShadowDepth5}">
-                    <TextBlock Margin="16" Text="Релизы сборки"/>
-                </materialDesign:ColorZone>
             </Grid>
         </materialDesign:Card>
         <materialDesign:Card  Height="300" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
-            <StackPanel>
-                <ComboBox Margin="5"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <ComboBox Margin="5"
                     materialDesign:HintAssist.Hint="Платформа для сборки"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     ItemsSource="{Binding Path=Platforms}"
                     SelectedItem="{Binding Path=SelectedDistribution.Platform}"
                     DisplayMemberPath="Name"/>
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      materialDesign:HintAssist.Hint="Корневой каталог сборки"
                      Text="{Binding Path=SelectedDistribution.RootFolder}"
                      Margin="5" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      materialDesign:HintAssist.Hint="Префикс базы"
                      Text="{Binding Path=SelectedDistribution.Prefix}"
                      Margin="5" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      materialDesign:HintAssist.Hint="Номер сервера лицензий"
                      Text="{Binding Path=SelectedDistribution.LicenseServerRelease}"
                      Margin="5" />
-                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      materialDesign:HintAssist.Hint="Каталог тестирования"
                      Text="{Binding Path=SelectedDistribution.TestCatalog}"
                      Margin="5" />
-            </StackPanel>
+                </StackPanel>
+                <Button Grid.Row="1" Margin="8"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                        Command="{Binding SaveDistributionsCommand}"
+                        Content="Сохранить"
+                        HorizontalAlignment="Right">
+                </Button>
+            </Grid>
         </materialDesign:Card>
     </WrapPanel>
 </UserControl>

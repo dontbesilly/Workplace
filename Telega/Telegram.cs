@@ -54,6 +54,12 @@ namespace Workplace1c
 
             if (MsgTxt is null) return;
 
+            if (MsgTxt.ToLower().Contains("kick"))
+            {
+                Kick(MsgTxt, chatId);
+                return;
+            }
+
             try
             {
                 var b = bases.FirstOrDefault(x => x.Telegram == MsgTxt);
@@ -66,63 +72,21 @@ namespace Workplace1c
             }
         }
 
-        #region old
-
-        //private void OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
-        //{
-        //    string MsgTxt = e.Message.Text;
-
-        //    int chatId = e.Message.From.Id;
-
-        //    if (!Constants.checkChatId(chatId))
-        //    {
-        //        SendMessage($"Пользователь {chatId} хочет добавиться", TelegramBots.BitFinanceCommand, Constants.ilyaChat);
-        //        return;
-        //    }
-
-        //    if (MsgTxt is null) return;
-
-        //    if (MsgTxt.ToLower().Contains("kick"))
-        //    {
-        //        Kick(MsgTxt, chatId);
-        //        return;
-        //    }
-
-        //    TelegramBots bot;
-        //    if (MsgTxt.ToLower().Contains("my"))
-        //    {
-        //        bot = TelegramBots.BitFinanceCommand;
-        //    }
-        //    else
-        //    {
-        //        chatId = 0;
-        //        bot = TelegramBots.BitFinanceTeam;
-        //    }
-
-        //    try
-        //    {
-        //        var b = bases.Where(x => x.Telegram == MsgTxt).FirstOrDefault();
-        //        if (b is null) return;
-        //        ThreadPool.QueueUserWorkItem(delegate { UpdateBase(b, bot, chatId); });
-        //    }
-        //    catch { }
-        //}
-
-        //private void Kick(string msg, int chatId)
-        //{
-        //    try
-        //    {
-        //        string[] arr = msg.Split(' ');
-        //        string baseName = arr[1];
-        //        server.ClearSessions(baseName, 10);
-        //        SendMessage($"Пользователи успешно выпнуты.", TelegramBots.BitFinanceCommand, chatId);
-        //    }
-        //    catch
-        //    {
-        //        string text = "Ошибка. Проверьте правильность написания базы. Регистр Важен!";
-        //        SendMessage(text, TelegramBots.BitFinanceCommand, chatId);
-        //    }
-        //}
+        private void Kick(string msg, int chatId)
+        {
+            try
+            {
+                string[] arr = msg.Split(' ');
+                string baseName = arr[1];
+                server.ClearSessions(baseName, 10);
+                SendMessage($"Пользователи успешно выпнуты.", chatId);
+            }
+            catch
+            {
+                string text = "Ошибка. Проверьте правильность написания базы. Регистр Важен!";
+                SendMessage(text, chatId);
+            }
+        }
 
         private async void UpdateBase(Base b, int chatId)
         {
@@ -153,8 +117,6 @@ namespace Workplace1c
             }
         }
 
-        #endregion
-
         public int SendMessage(string message, int chatId)
         {
             //TelegramDescription descr = new TelegramDescription(bot);
@@ -170,7 +132,7 @@ namespace Workplace1c
                     ? new TelegramBotClient(setting.ChatBot.Token, proxy)
                     : new TelegramBotClient(setting.ChatBot.Token);
             }
-            
+
             var msg = botSender.SendTextMessageAsync(chatId, message);
             return msg.Id;
         }
