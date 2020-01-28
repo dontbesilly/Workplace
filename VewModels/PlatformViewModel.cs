@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using Telegram.Bot.Types;
+using System.Windows.Input;
 using File = System.IO.File;
 
 namespace Workplace1c.VewModels
@@ -33,61 +31,38 @@ namespace Workplace1c.VewModels
             }
         }
 
-        private RelayCommand addPlatformCommand;
-        public RelayCommand AddPlatformCommand
+        public ICommand AddPlatformCommand => new RelayCommand(AddPlatformCommandExecuted);
+        public ICommand DeletePlatformCommand => new RelayCommand(DeletePlatformCommandExecuted);
+        public ICommand SavePlatformsCommand => new RelayCommand(SavePlatformsCommandExecuted);
+        public ICommand CheckPlatformsCommand => new RelayCommand(CheckPlatformsCommandExecuted);
+
+        private void CheckPlatformsCommandExecuted(object obj)
         {
-            get
-            {
-                return addPlatformCommand ??= new RelayCommand(obj =>
-                {
-                    var platfrorm1c = new Platform
-                    {
-                        Name = "8.3.15.0000",
-                        FullPath = "C:\\Program Files\\1cv8\\8.3.15.0000\\bin\\1cv8.exe"
-                    };
-                    db.Platforms.Add(platfrorm1c);
-                    db.SaveChanges();
-                });
-            }
+            CheckPlatforms();
         }
 
-        private RelayCommand deletePlatformCommand;
-        public RelayCommand DeletePlatformCommand
+        private void SavePlatformsCommandExecuted(object obj)
         {
-            get
-            {
-                return deletePlatformCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedPlatform is null) return;
-                    db.Platforms.Remove(selectedPlatform);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedPlatform is null) return;
+            db.UpdateEntity(selectedPlatform);
         }
 
-        private RelayCommand savePlatformsCommand;
-        public RelayCommand SavePlatformsCommand
+        private void DeletePlatformCommandExecuted(object obj)
         {
-            get
-            {
-                return savePlatformsCommand ??= new RelayCommand(obj =>
-                {
-                    if (selectedPlatform is null) return;
-                    db.Platforms.Update(selectedPlatform);
-                    db.SaveChanges();
-                });
-            }
+            if (selectedPlatform is null) return;
+            db.RemoveEntity(selectedPlatform);
         }
 
-        private RelayCommand checkPlatformsCommand;
-        public RelayCommand CheckPlatformsCommand
+        private void AddPlatformCommandExecuted(object obj)
         {
-            get
+            var platfrorm1c = new Platform
             {
-                return checkPlatformsCommand ??= new RelayCommand(obj => { CheckPlatforms(); });
-            }
+                Name = "8.3.15.7777",
+                FullPath = "C:\\Program Files\\1cv8\\8.3.15.7777\\bin\\1cv8.exe"
+            };
+            db.AddEntity(platfrorm1c);
         }
-
+        
         private void CheckPlatforms()
         {
             foreach (Platform platform in Platforms)

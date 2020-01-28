@@ -64,70 +64,78 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Height="280" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
-            <StackPanel Margin="8 0">
-                <ComboBox materialDesign:HintAssist.Hint="Бот для команд"
+        <materialDesign:Card Height="300" Width="500" Margin="0 8 8 8" VerticalAlignment="Top">
+            <Grid Margin="8 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <ComboBox materialDesign:HintAssist.Hint="Бот для команд"
                               materialDesign:TextFieldAssist.HasClearButton="True"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                               ItemsSource="{Binding Path=TelegramBots}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding TelegramSetting.CommandBot}" />
-                <ComboBox materialDesign:HintAssist.Hint="Бот для сообщений"
+                    <ComboBox materialDesign:HintAssist.Hint="Бот для сообщений"
                               materialDesign:TextFieldAssist.HasClearButton="True"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                               ItemsSource="{Binding Path=TelegramBots}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding TelegramSetting.ChatBot}" />
-                <ComboBox materialDesign:HintAssist.Hint="Платформа"
+                    <ComboBox materialDesign:HintAssist.Hint="Платформа"
                               materialDesign:TextFieldAssist.HasClearButton="True"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                               ItemsSource="{Binding Path=Platforms}"
                               DisplayMemberPath="Name"
                               SelectedItem="{Binding TelegramSetting.Platform}" />
-                <TextBox materialDesign:HintAssist.Hint="Полный путь к серверу"
+                    <TextBox materialDesign:HintAssist.Hint="Полный путь к серверу"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Text="{Binding TelegramSetting.ServerPath}"
                              VerticalAlignment="Center"/>
-                <TextBox materialDesign:HintAssist.Hint="Имя админа"
+                    <TextBox materialDesign:HintAssist.Hint="Имя админа"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Text="{Binding TelegramSetting.ServerAdminUserName}"
                              VerticalAlignment="Center"/>
-                <TextBox materialDesign:HintAssist.Hint="Пароль админа"
+                    <TextBox materialDesign:HintAssist.Hint="Пароль админа"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Text="{Binding TelegramSetting.ServerAdminPass}"
                              VerticalAlignment="Center"/>
-                <Button Margin="8"
-                            Style="{StaticResource MaterialDesignRaisedLightButton}"
-                            HorizontalAlignment="Right"
-                            Command="{Binding SaveSettingsCommand}"
-                            ToolTip="Сохранить настройки телеграм"
-                            Content="Сохранить"/>
-            </StackPanel>
-        </materialDesign:Card>
-        <materialDesign:Card Height="190" Width="250" Margin="0 8 8 8" VerticalAlignment="Top">
-            <StackPanel>
-                <CheckBox Margin="10 10 10 0" IsChecked="{Binding TelegramSetting.UseProxy}"
-                          Style="{StaticResource MaterialDesignLightCheckBox}"
-                          Content="Использовать soks5 прокси" />
-                <StackPanel Margin="8 0">
-                    <TextBox materialDesign:HintAssist.Hint="soks5 hostname"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding TelegramSetting.HostNameProxy}"
-                             VerticalAlignment="Center"/>
-                    <TextBox materialDesign:HintAssist.Hint="soks5 port"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding TelegramSetting.PortProxy}"
-                             VerticalAlignment="Center"/>
-                    <TextBox materialDesign:HintAssist.Hint="username"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding TelegramSetting.UserNameProxy}"
-                             VerticalAlignment="Center"/>
-                    <TextBox materialDesign:HintAssist.Hint="password"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding TelegramSetting.PasswordProxy}"
-                             VerticalAlignment="Center"/>
                 </StackPanel>
-            </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 0">
+                    <CheckBox Margin="10 10 10 10" IsChecked="{Binding TelegramSetting.UseProxy}"
+                              Style="{StaticResource MaterialDesignLightCheckBox}"
+                              Content="Использовать soks5 прокси" />
+                    <StackPanel Margin="8 0">
+                        <TextBox materialDesign:HintAssist.Hint="soks5 hostname"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 Text="{Binding TelegramSetting.HostNameProxy}"
+                                 VerticalAlignment="Center"/>
+                        <TextBox materialDesign:HintAssist.Hint="soks5 port"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 Text="{Binding TelegramSetting.PortProxy}"
+                                 VerticalAlignment="Center"/>
+                        <TextBox materialDesign:HintAssist.Hint="username"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 Text="{Binding TelegramSetting.UserNameProxy}"
+                                 VerticalAlignment="Center"/>
+                        <TextBox materialDesign:HintAssist.Hint="password"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 Text="{Binding TelegramSetting.PasswordProxy}"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="0" Margin="8"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Command="{Binding SaveSettingsCommand}"
+                        ToolTip="Сохранить настройки телеграм"
+                        Content="Сохранить"/>
+            </Grid>
         </materialDesign:Card>
     </WrapPanel>
 </UserControl>
