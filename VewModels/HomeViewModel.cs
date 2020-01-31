@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows.Input;
@@ -14,6 +16,7 @@ namespace Workplace1c.VewModels
         private readonly Timer timer;
 
         public ObservableCollection<DistributionAction> DistributionActions { get; set; }
+        public ObservableCollection<Distribution> Distributions { get; set; }
         public ObservableCollection<Base> Bases { get; set; }
         public TelegramSetting TelegramSetting { get; set; }
 
@@ -28,9 +31,44 @@ namespace Workplace1c.VewModels
             }
         }
 
+        private Distribution currentDistribution;
+        public Distribution CurrentDistribution
+        {
+            get => currentDistribution;
+            set
+            {
+                var distributionAction = DistributionActions.FirstOrDefault(x => x.Distribution == currentDistribution);
+                if (distributionAction is null)
+                {
+                    var newDistributionAction = new DistributionAction { Distribution = currentDistribution };
+                    db.AddEntity(newDistributionAction);
+                    CurrentDistributionAction = newDistributionAction;
+                }
+                else
+                {
+                    CurrentDistributionAction = distributionAction;
+                }
+
+                currentDistribution = value;
+                OnPropertyChanged(nameof(CurrentDistribution));
+            }
+        }
+
+        private DistributionAction currentDistributionAction;
+        public DistributionAction CurrentDistributionAction
+        {
+            get => currentDistributionAction;
+            set
+            {
+                currentDistributionAction = value;
+                OnPropertyChanged(nameof(CurrentDistributionAction));
+            }
+        }
+
         public HomeViewModel(WorkplaceContext db)
         {
             DistributionActions = db.GetDistributionActionsLocal();
+            Distributions = db.GetDistributionsLocal();
             Bases = db.GetBasesLocal();
             this.db = db;
             TelegramSetting = db.TelegramSetting;
@@ -41,6 +79,12 @@ namespace Workplace1c.VewModels
         public ICommand StartTelegramCommand => new RelayCommand(StartTelegramCommandExecuted);
         public ICommand StopTelegramCommand => new RelayCommand(StopTelegramCommandExecuted);
         public ICommand CheckBotIsReceivingCommand => new RelayCommand(CheckBotIsReceivingCommandExecuted);
+        public ICommand SaveDistributionActionCommand => new RelayCommand(SaveDistributionActionCommandExecuted);
+
+        private void SaveDistributionActionCommandExecuted(object obj)
+        {
+            db.UpdateEntity(CurrentDistributionAction);
+        }
 
         private void StartTelegramCommandExecuted(object obj)
         {

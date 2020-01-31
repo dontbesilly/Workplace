@@ -6,7 +6,6 @@ namespace Workplace1c.Distribution1c
 {
     class DistributionAction : INotifyPropertyChanged
     {
-
         private Distribution distribution;
         private Release currentRelease;
 
