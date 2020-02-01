@@ -65,6 +65,17 @@ namespace Workplace1c.VewModels
             }
         }
 
+        private Release selectedPreviousRelease;
+        public Release SelectedPreviousRelease
+        {
+            get => selectedPreviousRelease;
+            set
+            {
+                selectedPreviousRelease = value;
+                OnPropertyChanged(nameof(SelectedPreviousRelease));
+            }
+        }
+
         public HomeViewModel(WorkplaceContext db)
         {
             DistributionActions = db.GetDistributionActionsLocal();

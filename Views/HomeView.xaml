@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Workplace1c.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d">
     <StackPanel>
         <materialDesign:Card Height="130" Width="350" Margin="8" HorizontalAlignment="Left">
@@ -35,23 +36,87 @@
                 </StackPanel>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Height="550" Width="430" Margin="8 0 0 0" HorizontalAlignment="Left">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
+        <materialDesign:Card Height="350" Width="430" Margin="8 0 0 8" HorizontalAlignment="Left">
+            <DockPanel>
+                <StackPanel>
                     <ComboBox Margin="8 0" materialDesign:HintAssist.Hint="Сборка релиза"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                               ItemsSource="{Binding Path=Distributions}"
                               SelectedItem="{Binding Path=CurrentDistribution}"
                               DisplayMemberPath="Name"/>
-                    <TextBox Margin="8 0"
-                             VerticalAlignment="Center"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding CurrentDistributionAction.CurrentRelease.Name}"
-                             materialDesign:HintAssist.Hint="Релиз сборки"/>
+                    <ComboBox Margin="8 0" materialDesign:HintAssist.Hint="Релиз сборки"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              ItemsSource="{Binding Path=CurrentDistribution.Releases}"
+                              SelectedItem="{Binding Path=CurrentDistributionAction.CurrentRelease}"
+                              DisplayMemberPath="Name"/>
+                    <materialDesign:DialogHost Margin="0 8 0 0"
+                                               Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
+                                               DialogMargin="8">
+                        <materialDesign:DialogHost.DialogContent>
+                            <Grid Margin="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Margin="16">
+                                    <ComboBox Margin="8 0" materialDesign:HintAssist.Hint="Релиз сборки"
+                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              ItemsSource="{Binding Path=CurrentDistribution.Releases}"
+                                              SelectedItem="{Binding Path=CurrentDistributionAction.CurrentRelease}"
+                                              DisplayMemberPath="Name"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 0"
+                    Orientation="Horizontal">
+                                    <Button IsDefault="True" 
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Content="OK">
+                                        <Button.CommandParameter>
+                                            <system:Boolean>True</system:Boolean>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                    <Button IsCancel="True" Margin="20 0 0 0" 
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Content="Отмена">
+                                        <Button.CommandParameter>
+                                            <system:Boolean>False</system:Boolean>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:DialogHost.DialogContent>
+                        <Border BorderThickness="1"
+                                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                                ClipToBounds="True"
+                                HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ListBox x:Name="AnimalListBox" Height="100">
+                                </ListBox>
+                                <materialDesign:ColorZone Mode="Standard" Grid.Row="1"
+                                                          Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                                    <TextBlock Margin="16"> Предыдущие релизы
+                                    </TextBlock>
+                                </materialDesign:ColorZone>
+                                <Button
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Grid.Row="0"
+                                    Margin="0 0 28 -20">
+                                    <materialDesign:PackIcon
+                                      Kind="Plus"
+                                      Height="22"
+                                      Width="22" />
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </materialDesign:DialogHost>
                     <Button Margin="10"
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             Command="{Binding SaveDistributionActionCommand}"
@@ -60,57 +125,7 @@
                             Background="{DynamicResource MaterialDesignTextFieldBoxBackground}">
                     </Button>
                 </StackPanel>
-                <DataGrid Margin="0 8 0 0"  Grid.Column="1" IsSynchronizedWithCurrentItem="True"
-                  ItemsSource="{Binding Bases}" 
-                  SelectedItem="{Binding SelectedBase}"
-                  CanUserSortColumns="True" 
-                  CanUserAddRows="False" AutoGenerateColumns="False"
-                  materialDesign:DataGridAssist.CellPadding="13 7 7 7"
-                  materialDesign:DataGridAssist.ColumnHeaderPadding="7">
-                    <DataGrid.Columns>
-                        <materialDesign:DataGridTextColumn Width="155"
-                    Binding="{Binding Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                    MaxLength="255"
-                    Header="Наименование"
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </materialDesign:DataGridTextColumn>
-                        <DataGridCheckBoxColumn Width="100"
-                    Header="Серверная"
-                    Binding="{Binding Path=IsServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                        </DataGridCheckBoxColumn>
-                        <DataGridCheckBoxColumn Width="100"
-                    Header="Хранилище"
-                    Binding="{Binding Path=IsRepository, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                        </DataGridCheckBoxColumn>
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <Button Height="30" Width="30"
-                                            Command="{Binding Path=DataContext.DeleteBaseCommand,
-                                            RelativeSource={RelativeSource FindAncestor,
-                                            AncestorType={x:Type DataGrid}}}"
-                                            Style="{StaticResource MaterialDesignIconButton}"
-                                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
-                                            ToolTip="Удалить">
-                                            <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" />
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            </DockPanel>
         </materialDesign:Card>
 
     </StackPanel>
