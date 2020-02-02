@@ -10,16 +10,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MaterialDesignThemes.Wpf;
 
 namespace Workplace1c.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Логика взаимодействия для PreviousReleaseView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class PreviousReleaseView : UserControl
     {
-        public HomeView()
+        public PreviousReleaseView()
         {
             InitializeComponent();
         }

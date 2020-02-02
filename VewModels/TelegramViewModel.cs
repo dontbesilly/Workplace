@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MaterialDesignThemes.Wpf;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 using Workplace1c.Views;
 
 namespace Workplace1c.VewModels

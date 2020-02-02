@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 using Workplace1c.Distribution1c;
+using Workplace1c.Views;
 
 namespace Workplace1c.VewModels
 {
@@ -91,6 +93,20 @@ namespace Workplace1c.VewModels
         public ICommand StopTelegramCommand => new RelayCommand(StopTelegramCommandExecuted);
         public ICommand CheckBotIsReceivingCommand => new RelayCommand(CheckBotIsReceivingCommandExecuted);
         public ICommand SaveDistributionActionCommand => new RelayCommand(SaveDistributionActionCommandExecuted);
+        public ICommand OpenPreviousReleaseCommand => new RelayCommand(OpenPreviousReleaseCommandExecuted);
+
+        private async void OpenPreviousReleaseCommandExecuted(object obj)
+        {
+            //var test = PreviousRelease.
+            var view = new PreviousReleaseView()
+            {
+                DataContext = CurrentDistributionAction
+            };
+
+            var result = await DialogHost.Show(view, "PreviousReleaseDialog");
+
+
+        }
 
         private void SaveDistributionActionCommandExecuted(object obj)
         {
