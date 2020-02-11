@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using Workplace1c.VewModels;
 using Workplace1c.Views;
@@ -36,6 +37,7 @@ namespace Workplace1c
         public void InitMainWindow(MainWindow mainWindow)
         {
             MainWindow = mainWindow;
+            MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             MainWindow.Show();
             MainWindow.FrameBody.NavigationService.Navigate(HomeView);
         }

@@ -34,10 +34,6 @@
                             Content="Платформы 1с" HorizontalContentAlignment="Left"
                             Command="{x:Static local:NavigationCommands.OpenPlatformsCommand}"/>
                         <Button HorizontalAlignment="Stretch"
-                            Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Действия" 
-                            Content="Действия с базами" HorizontalContentAlignment="Left"
-                            Command="{x:Static local:NavigationCommands.OpenActionsCommand}"/>
-                        <Button HorizontalAlignment="Stretch"
                                 Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Сборки 1с" 
                                 Content="Создание сборок" HorizontalContentAlignment="Left"
                                 Command="{x:Static local:NavigationCommands.OpenDistributionsCommand}"/>

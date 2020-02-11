@@ -36,7 +36,7 @@
                 </StackPanel>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Height="350" Width="430" Margin="8 0 0 8" HorizontalAlignment="Left">
+        <materialDesign:Card Height="350" Width="430" Margin="8 0 0 8" HorizontalAlignment="Left" Visibility="Hidden">
             <DockPanel>
                 <StackPanel>
                     <ComboBox Margin="8 0" materialDesign:HintAssist.Hint="Сборка релиза"
