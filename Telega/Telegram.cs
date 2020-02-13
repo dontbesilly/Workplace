@@ -132,6 +132,7 @@ namespace Workplace1c
                 botSender = setting.UseProxy
                     ? new TelegramBotClient(setting.ChatBot.Token, proxy)
                     : new TelegramBotClient(setting.ChatBot.Token);
+                if (setting.ChatBot.ChatId != 0) chatId = setting.ChatBot.ChatId;
             }
 
             var msg = botSender.SendTextMessageAsync(chatId, message);
