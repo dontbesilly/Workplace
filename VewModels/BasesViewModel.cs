@@ -55,7 +55,11 @@ namespace Workplace1c.VewModels
                     {
                         var base1C = new Base
                         {
-                            Title = serverBaseName
+                            Title = serverBaseName,
+                            Folder = Path.Combine(TelegramSetting.ServerPath, serverBaseName),
+                            User = "Агличев В.В. (БИТ.ФИНАНС)",
+                            IsRepository = true,
+                            IsServer = true
                         };
                         db.AddEntity(base1C);
                     }

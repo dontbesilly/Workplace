@@ -64,13 +64,14 @@
                 </Button>
             </Grid>
         </materialDesign:Card>
-        <materialDesign:Card Height="300" Width="500" Margin="0 8 8 8" VerticalAlignment="Top">
+        <materialDesign:Card Height="300" Width="700" Margin="0 8 8 8" VerticalAlignment="Top">
             <Grid Margin="8 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -129,12 +130,57 @@
                                  VerticalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>
-                <Button Grid.Row="1" Grid.Column="0" Margin="8"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                <Grid Grid.Row="0" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding TelegramSetting.ApprovedChatIds}"
+                          SelectedItem="{Binding CurrentChatId}"
+                          CanUserSortColumns="True" 
+                          CanUserAddRows="False" AutoGenerateColumns="False"
+                          materialDesign:DataGridAssist.CellPadding="13 7 7 7"
+                          materialDesign:DataGridAssist.ColumnHeaderPadding="7"
+                          HeadersVisibility="None">
+                        <DataGrid.Columns>
+                            <materialDesign:DataGridTextColumn Width="220"
+                                Binding="{Binding Path=Chat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            </materialDesign:DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal"
+                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock FontSize="14" VerticalAlignment="Center" Margin="10">
+                        Разрешенные чаты
+                    </TextBlock>
+                    <Button Margin="5" 
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Command="{Binding AddChatIdCommand}"
+                            Width="40" Height="40"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                            ToolTip="Добавить бота">
+                        <materialDesign:PackIcon Kind="Plus" Height="22" Width="22" />
+                    </Button>
+                    <Button  Margin="0 0 0 0" 
+                             HorizontalAlignment="Right" VerticalAlignment="Center"
+                             Command="{Binding DeleteChatIdCommand}"
+                             Width="40" Height="40"
+                             Style="{StaticResource MaterialDesignIconButton}"
+                             Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                             ToolTip="Удалить бота">
+                        <materialDesign:PackIcon Kind="Delete" Height="22" Width="22" />
+                    </Button>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="1" Margin="-70"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                         Command="{Binding SaveSettingsCommand}"
                         ToolTip="Сохранить настройки телеграм"
-                        Content="Сохранить"/>
+                        Content="Сохранить настройки"/>
             </Grid>
         </materialDesign:Card>
     </WrapPanel>

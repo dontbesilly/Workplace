@@ -27,11 +27,13 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Margin="8" Width="110"
                             Command="{Binding StartTelegramCommand}"
-                            Style="{StaticResource MaterialDesignRaisedLightButton}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                             Content="Запустить"/>
                     <Button Margin="8" Width="110"
                             Command="{Binding StopTelegramCommand}"
-                            Style="{StaticResource MaterialDesignRaisedLightButton}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                             Content="Остановить"/>
                 </StackPanel>
             </Grid>

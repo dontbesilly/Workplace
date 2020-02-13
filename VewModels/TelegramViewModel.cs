@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,6 +29,8 @@ namespace Workplace1c.VewModels
         public ICommand AddBotCommand => new RelayCommand(AddBotCommandExecuted);
         public ICommand DeleteBotCommand => new RelayCommand(DeleteBotCommandExecuted);
         public ICommand EditBotCommand => new RelayCommand(EditBotCommandExecuted);
+        public ICommand AddChatIdCommand => new RelayCommand(AddChatIdCommandExecuted);
+        public ICommand DeleteChatIdCommand => new RelayCommand(DeleteChatIdCommandExecuted);
 
         private TelegramBot selectedTelegramBot;
         public TelegramBot SelectedTelegramBot
@@ -50,6 +53,33 @@ namespace Workplace1c.VewModels
                 telegramSetting = value;
                 OnPropertyChanged(nameof(TelegramSetting));
             }
+        }
+
+        private ChatId currentChatId;
+        public ChatId CurrentChatId
+        {
+            get => currentChatId;
+            set
+            {
+                currentChatId = value;
+                OnPropertyChanged(nameof(CurrentChatId));
+            }
+        }
+
+        private void AddChatIdCommandExecuted(object obj)
+        {
+            var chatId = new ChatId
+            {
+                Chat = 12345
+            };
+            db.AddEntity(chatId);
+            TelegramSetting.ApprovedChatIds.Add(chatId);
+        }
+
+        private void DeleteChatIdCommandExecuted(object obj)
+        {
+            if (CurrentChatId is null) return;
+            db.RemoveEntity(CurrentChatId);
         }
 
         private async void AddBotCommandExecuted(object obj)

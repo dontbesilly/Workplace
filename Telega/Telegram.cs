@@ -52,6 +52,9 @@ namespace Workplace1c
             string MsgTxt = e.Message.Text;
             int chatId = e.Message.From.Id;
 
+            var findedChatId = setting.ApprovedChatIds.FirstOrDefault(c => c.Chat == chatId);
+            if (findedChatId is null) return;
+
             if (MsgTxt is null) return;
 
             if (MsgTxt.ToLower().Contains("kick"))
@@ -119,8 +122,6 @@ namespace Workplace1c
 
         public int SendMessage(string message, int chatId)
         {
-            //TelegramDescription descr = new TelegramDescription(bot);
-
             TelegramBotClient botSender;
             if (setting.ChatBot is null)
             {

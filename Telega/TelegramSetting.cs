@@ -17,6 +17,11 @@ namespace Workplace1c
         private string hostNameProxy = "", userNameProxy = "", passwordProxy = "";
         private int portProxy = 0;
 
+        public TelegramSetting()
+        {
+            ApprovedChatIds = new ObservableCollection<ChatId>();
+        }
+
         public int Id { get; set; }
 
         public bool UseProxy
@@ -98,7 +103,6 @@ namespace Workplace1c
             get => serverPath;
             set { serverPath = value; OnPropertyChanged(nameof(ServerPath)); }
         }
-
 
         public string ServerAdminUserName
         {
